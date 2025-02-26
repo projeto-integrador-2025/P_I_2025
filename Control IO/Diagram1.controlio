@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ControlIO Version="v1.0.0">
+  <Properties SyncReset="true" CycleTime="10" />
+  <Diagram DiagramPosition="-676,-23" DiagramScale="0.746215396636627">
+    <NodeData Key="3" Location="-105 150" NodeType="OutputBit" MemMapAddress="2" NodeDescription="Pivot Arm Sorter 0 Belt (+)" />
+    <NodeData Key="2" Location="-95 25" NodeType="OutputBit" MemMapAddress="1" NodeDescription="Pivot Arm Sorter 0 Turn" />
+    <NodeData Key="8" Location="-255 70" NodeType="InternalCustomNode" AssemblyName="Function Blocks" NodeID="ControlIO.Plugins.FunctionBlocks.Sr" />
+    <NodeData Key="10" Location="-470 130" NodeType="InputBit" MemMapAddress="0" NodeDescription="Capacitive Sensor 0" />
+    <NodeData Key="7" Location="-470 40" NodeType="InputBit" MemMapAddress="3" NodeDescription="metal2" />
+    <NodeData Key="4" Location="-475 265" NodeType="InputBit" MemMapAddress="4" NodeDescription="Vision Sensor 0" />
+    <NodeData Key="6" Location="-310 300" NodeType="InternalCustomNode" AssemblyName="Function Blocks" NodeID="ControlIO.Plugins.FunctionBlocks.Sr" />
+    <NodeData Key="5" Location="-125 315" NodeType="OutputBit" MemMapAddress="6" NodeDescription="atuador2" />
+    <NodeData Key="9" Location="-475 355" NodeType="InputBit" MemMapAddress="6" NodeDescription="Vision Sensor 1" />
+    <LinkData From="8" To="2" FromPort="Out-Bit-0" ToPort="In-Bit-0" NodeType="LinkData" />
+    <LinkData From="8" To="3" FromPort="Out-Bit-0" ToPort="In-Bit-0" NodeType="LinkData" />
+    <LinkData From="10" To="8" FromPort="Out-Bit-0" ToPort="In-Bit-1" NodeType="LinkData" />
+    <LinkData From="7" To="8" FromPort="Out-Bit-0" ToPort="In-Bit-0" NodeType="LinkData" />
+    <LinkData From="4" To="6" FromPort="Out-Bit-0" ToPort="In-Bit-0" NodeType="LinkData" />
+    <LinkData From="6" To="5" FromPort="Out-Bit-0" ToPort="In-Bit-0" NodeType="LinkData" />
+    <LinkData From="9" To="6" FromPort="Out-Bit-0" ToPort="In-Bit-1" NodeType="LinkData" />
+  </Diagram>
+</ControlIO>
