@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard de Produção</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+</head>
+<body>
+
+<div class="tudo">
+  <div class="sidebar">
+    <h2>Painel</h2>
+    
+    <button id="btnDashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+    <button id="btnChatbot"><i class="fas fa-comment-dots"></i> Chatbot</button>
+    <button id="btnMonitoramento"><i class="fas fa-chart-line"></i> Monitoramento</button>
+    
+  </div>
+
+  <div class="bloco-direita">
+    <header>
+      <h2> DASBHOARD <img src="/Pagina Inicial/logo.ico" width="40px"></h2>
+    </header>
+
+    <section class="container">
+      <section class="filho1">
+        <canvas id="graficoErro"></canvas>
+        <h3>Taxa de erro na separação</h3>
+      </section>
+
+      <section class="filho2">
+        <h3>Materiais Processados</h3>
+        <canvas id="graficoMateriais"></canvas>
+      </section>
+    </section>
+
+    <section class="container2">
+      <section class="filho3">
+        <h3>Desempenho Geral</h3>
+        <canvas id="graficoDesempenho"></canvas>
+      </section>
+    </section>
+  </div>
+</div>
+
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
