@@ -20,40 +20,59 @@ public partial class MonitoringContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Ciclo>(entity =>
-        {
-            entity.HasKey(e => e.IdCiclo).HasName("ciclo_pkey");
+       modelBuilder.Entity<Ciclo>(entity =>
+{
+    entity.HasKey(e => e.IdCiclo).HasName("ciclo_pkey");
 
-            entity.Property(e => e.TempoInicial).HasDefaultValueSql("CURRENT_TIMESTAMP");
-            entity.Property(e => e.TimestampCiclo).HasDefaultValueSql("CURRENT_TIMESTAMP");
+    entity.Property(e => e.TempoInicial)
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-            entity.HasOne(d => d.IdEstacaoNavigation).WithMany(p => p.Ciclos).HasConstraintName("ciclo_id_estacao_fkey");
+    entity.Property(e => e.TimestampCiclo)
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-            entity.HasOne(d => d.IdPecaNavigation).WithMany(p => p.Ciclos).HasConstraintName("ciclo_id_peca_fkey");
-        });
+    entity.HasOne(d => d.IdEstacaoNavigation)
+        .WithMany(p => p.Ciclos)
+        .HasConstraintName("ciclo_id_estacao_fkey");
+
+    entity.HasOne(d => d.IdPecaNavigation)
+        .WithMany(p => p.Ciclos)
+        .HasConstraintName("ciclo_id_peca_fkey");
+});
+
 
         modelBuilder.Entity<DeteccaoSensor>(entity =>
-        {
-            entity.HasKey(e => e.IdDeteccao).HasName("deteccao_sensor_pkey");
+{
+    entity.HasKey(e => e.IdDeteccao).HasName("deteccao_sensor_pkey");
 
-            entity.Property(e => e.TimestampDeteccao).HasDefaultValueSql("CURRENT_TIMESTAMP");
+    entity.Property(e => e.TimestampDeteccao)
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-            entity.HasOne(d => d.IdSensorNavigation).WithMany(p => p.DeteccaoSensors).HasConstraintName("deteccao_sensor_id_sensor_fkey");
-        });
+    entity.HasOne(d => d.IdSensorNavigation)
+        .WithMany(p => p.DeteccaoSensors)
+        .HasConstraintName("deteccao_sensor_id_sensor_fkey");
+});
+
 
         modelBuilder.Entity<Estacao>(entity =>
         {
             entity.HasKey(e => e.IdEstacao).HasName("estacao_pkey");
         });
 
-        modelBuilder.Entity<EstacaoEstado>(entity =>
-        {
-            entity.HasKey(e => e.IdEstado).HasName("estacao_estado_pkey");
+       modelBuilder.Entity<EstacaoEstado>(entity =>
+{
+    entity.HasKey(e => e.IdEstado).HasName("estacao_estado_pkey");
 
-            entity.Property(e => e.TimestampEstado).HasDefaultValueSql("CURRENT_TIMESTAMP");
+    entity.Property(e => e.TimestampEstado)
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-            entity.HasOne(d => d.IdEstacaoNavigation).WithMany(p => p.EstacaoEstados).HasConstraintName("estacao_estado_id_estacao_fkey");
-        });
+    entity.HasOne(d => d.IdEstacaoNavigation)
+        .WithMany(p => p.EstacaoEstados)
+        .HasConstraintName("estacao_estado_id_estacao_fkey");
+});
 
         modelBuilder.Entity<Peca>(entity =>
         {

@@ -23,6 +23,14 @@ namespace MonitoramentoAPI.Controllers
             _context = context;
         }
 
+        private DateTime NormalizeUtc(DateTime dateTime)
+{
+    return dateTime.Kind == DateTimeKind.Utc
+        ? dateTime
+        : DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+}
+
+
         // GET: api/EstacaoEstado
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EstacaoEstadoDTO>>> GetEstacoesEstados()
@@ -45,69 +53,58 @@ namespace MonitoramentoAPI.Controllers
             return MapToDTO(estado);
         }
 
-        // PUT: api/EstacaoEstado/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEstacaoEstado(int id, EstacaoEstadoDTO estadoDTO)
-        {
-            if (id != estadoDTO.IdEstado)
-            {
-                return BadRequest("ID na URL não corresponde ao ID do estado.");
-            }
+       // PUT: api/EstacaoEstado/5
+[HttpPut("{id}")]
+public async Task<IActionResult> PutEstacaoEstado(int id, EstacaoEstadoDTO estadoDTO)
+{
+    if (id != estadoDTO.IdEstado)
+        return BadRequest("ID na URL não corresponde ao ID do estado.");
 
-            var estado = await _context.EstacoesEstados.FindAsync(id);
-            if (estado == null)
-            {
-                return NotFound();
-            }
+    var estado = await _context.EstacoesEstados.FindAsync(id);
+    if (estado == null)
+        return NotFound();
 
-            // Mapeia DTO para o modelo existente
-            estado.IdEstacao = estadoDTO.IdEstacao;
-            estado.Estado = estadoDTO.Estado;
-            estado.TimestampEstado = estadoDTO.TimestampEstado;
+    estado.IdEstacao = estadoDTO.IdEstacao;
+    estado.Estado = estadoDTO.Estado;
+    estado.TimestampEstado = NormalizeUtc(estadoDTO.TimestampEstado);
 
-            _context.Entry(estado).State = EntityState.Modified;
+    _context.Entry(estado).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EstacaoEstadoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+    try
+    {
+        await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        if (!EstacaoEstadoExists(id))
+            return NotFound();
+        else
+            throw;
+    }
 
-            return NoContent();
-        }
+    return NoContent();
+}
+// POST: api/EstacaoEstado
+[HttpPost]
+public async Task<ActionResult<EstacaoEstadoDTO>> PostEstacaoEstado(CreateEstacaoEstadoDTO createDTO)
+{
+    if (!ModelState.IsValid)
+        return BadRequest(ModelState);
 
-        // POST: api/EstacaoEstado
-        [HttpPost]
-        public async Task<ActionResult<EstacaoEstadoDTO>> PostEstacaoEstado(CreateEstacaoEstadoDTO createDTO)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+    var estado = new EstacaoEstado
+    {
+        IdEstacao = createDTO.IdEstacao,
+        Estado = createDTO.Estado,
+        TimestampEstado = NormalizeUtc(createDTO.TimestampEstado)
+    };
 
-            var estado = new EstacaoEstado
-            {
-                IdEstacao = createDTO.IdEstacao,
-                Estado = createDTO.Estado,
-                TimestampEstado = createDTO.TimestampEstado
-            };
+    _context.EstacoesEstados.Add(estado);
+    await _context.SaveChangesAsync();
 
-            _context.EstacoesEstados.Add(estado);
-            await _context.SaveChangesAsync();
+    var estadoDTO = MapToDTO(estado);
+    return CreatedAtAction("GetEstacaoEstado", new { id = estado.IdEstado }, estadoDTO);
+}
 
-            var estadoDTO = MapToDTO(estado);
-            return CreatedAtAction("GetEstacaoEstado", new { id = estado.IdEstado }, estadoDTO);
-        }
 
         // DELETE: api/EstacaoEstado/5
         [HttpDelete("{id}")]

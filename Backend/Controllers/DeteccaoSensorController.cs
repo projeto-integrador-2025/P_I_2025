@@ -23,6 +23,14 @@ namespace MonitoramentoAPI.Controllers
             _context = context;
         }
 
+        private DateTime NormalizeUtc(DateTime dateTime)
+        {
+            return dateTime.Kind == DateTimeKind.Utc
+            ? dateTime
+            : DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+        }
+
+
         // GET: api/DeteccaoSensor
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DeteccaoSensorDTO>>> GetDeteccoesSensor()
@@ -46,66 +54,55 @@ namespace MonitoramentoAPI.Controllers
         }
 
         // PUT: api/DeteccaoSensor/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDeteccaoSensor(int id, DeteccaoSensorDTO deteccaoDTO)
-        {
-            if (id != deteccaoDTO.IdDeteccao)
-            {
-                return BadRequest("ID na URL não corresponde ao ID da detecção.");
-            }
+[HttpPut("{id}")]
+public async Task<IActionResult> PutDeteccaoSensor(int id, DeteccaoSensorDTO deteccaoDTO)
+{
+    if (id != deteccaoDTO.IdDeteccao)
+        return BadRequest("ID na URL não corresponde ao ID da detecção.");
 
-            var deteccao = await _context.DeteccoesSensor.FindAsync(id);
-            if (deteccao == null)
-            {
-                return NotFound();
-            }
+    var deteccao = await _context.DeteccoesSensor.FindAsync(id);
+    if (deteccao == null)
+        return NotFound();
 
-            // Mapeia DTO para o modelo existente
-            deteccao.IdSensor = deteccaoDTO.IdSensor;
-            deteccao.TimestampDeteccao = deteccaoDTO.TimestampDeteccao;
+    deteccao.IdSensor = deteccaoDTO.IdSensor;
+    deteccao.TimestampDeteccao = NormalizeUtc(deteccaoDTO.TimestampDeteccao);
 
-            _context.Entry(deteccao).State = EntityState.Modified;
+    try
+    {
+        await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        if (!DeteccaoExists(id))
+            return NotFound();
+        else
+            throw;
+    }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DeteccaoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+    return NoContent();
+}
 
         // POST: api/DeteccaoSensor
-        [HttpPost]
-        public async Task<ActionResult<DeteccaoSensorDTO>> PostDeteccaoSensor(CreateDeteccaoSensorDTO createDTO)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+[HttpPost]
+public async Task<ActionResult<DeteccaoSensorDTO>> PostDeteccaoSensor(CreateDeteccaoSensorDTO createDTO)
+{
+    if (!ModelState.IsValid)
+        return BadRequest(ModelState);
 
-            var deteccao = new DeteccaoSensor
-            {
-                IdSensor = createDTO.IdSensor,
-                TimestampDeteccao = createDTO.TimestampDeteccao
-            };
+    var deteccao = new DeteccaoSensor
+    {
+        IdSensor = createDTO.IdSensor,
+        TimestampDeteccao = NormalizeUtc(createDTO.TimestampDeteccao)
+    };
 
-            _context.DeteccoesSensor.Add(deteccao);
-            await _context.SaveChangesAsync();
+    _context.DeteccoesSensor.Add(deteccao);
+    await _context.SaveChangesAsync();
 
-            var deteccaoDTO = MapToDTO(deteccao);
-            return CreatedAtAction("GetDeteccaoSensor", new { id = deteccao.IdDeteccao }, deteccaoDTO);
-        }
+    var deteccaoDTO = MapToDTO(deteccao);
+    return CreatedAtAction("GetDeteccaoSensor", new { id = deteccao.IdDeteccao }, deteccaoDTO);
+}
+
+
 
         // DELETE: api/DeteccaoSensor/5
         [HttpDelete("{id}")]

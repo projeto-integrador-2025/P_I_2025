@@ -45,71 +45,59 @@ namespace MonitoramentoAPI.Controllers
             return MapToDTO(ciclo);
         }
 
-        // PUT: api/Ciclos/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCiclo(int id, CicloDTO cicloDTO)
-        {
-            if (id != cicloDTO.IdCiclo)
-            {
-                return BadRequest("ID na URL não corresponde ao ID do ciclo.");
-            }
+       [HttpPut("{id}")]
+public async Task<IActionResult> PutCiclo(int id, CicloDTO cicloDTO)
+{
+    if (id != cicloDTO.IdCiclo)
+        return BadRequest("ID na URL não corresponde ao ID do ciclo.");
 
-            var ciclo = await _context.Ciclos.FindAsync(id);
-            if (ciclo == null)
-            {
-                return NotFound();
-            }
+    var ciclo = await _context.Ciclos.FindAsync(id);
+    if (ciclo == null)
+        return NotFound();
 
-            // Mapeia DTO para o modelo existente
-            ciclo.IdPeca = cicloDTO.IdPeca;
-            ciclo.IdEstacao = cicloDTO.IdEstacao;
-            ciclo.TempoInicial = cicloDTO.TempoInicial;
-            ciclo.TimestampCiclo = cicloDTO.TimestampCiclo;
+    // Atualiza os campos
+    ciclo.IdPeca = cicloDTO.IdPeca;
+    ciclo.IdEstacao = cicloDTO.IdEstacao;
+    ciclo.TempoInicial = cicloDTO.TempoInicial.ToUniversalTime();
+    ciclo.TimestampCiclo = cicloDTO.TimestampCiclo.ToUniversalTime();
 
-            _context.Entry(ciclo).State = EntityState.Modified;
+    try
+    {
+        await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        if (!CicloExists(id))
+            return NotFound();
+        else
+            throw;
+    }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CicloExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+    return NoContent();
+}
 
-            return NoContent();
-        }
 
-        // POST: api/Ciclos
-        [HttpPost]
-        public async Task<ActionResult<CicloDTO>> PostCiclo(CreateCicloDTO createCicloDTO)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+[HttpPost]
+public async Task<ActionResult<CicloDTO>> PostCiclo(CreateCicloDTO createCicloDTO)
+{
+    if (!ModelState.IsValid)
+        return BadRequest(ModelState);
 
-            var ciclo = new Ciclo
-            {
-                IdPeca = createCicloDTO.IdPeca,
-                IdEstacao = createCicloDTO.IdEstacao,
-                TempoInicial = createCicloDTO.TempoInicial,
-                TimestampCiclo = createCicloDTO.TimestampCiclo
-            };
+    var ciclo = new Ciclo
+    {
+        IdPeca = createCicloDTO.IdPeca,
+        IdEstacao = createCicloDTO.IdEstacao,
+        TempoInicial = createCicloDTO.TempoInicial.ToUniversalTime(),
+        TimestampCiclo = createCicloDTO.TimestampCiclo.ToUniversalTime()
+    };
 
-            _context.Ciclos.Add(ciclo);
-            await _context.SaveChangesAsync();
+    _context.Ciclos.Add(ciclo);
+    await _context.SaveChangesAsync();
 
-            var cicloDTO = MapToDTO(ciclo);
-            return CreatedAtAction("GetCiclo", new { id = ciclo.IdCiclo }, cicloDTO);
-        }
+    var cicloDTO = MapToDTO(ciclo);
+    return CreatedAtAction("GetCiclo", new { id = ciclo.IdCiclo }, cicloDTO);
+}
+
 
         // DELETE: api/Ciclos/5
         [HttpDelete("{id}")]
