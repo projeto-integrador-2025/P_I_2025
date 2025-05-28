@@ -94,6 +94,7 @@ public partial class MonitoringContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nome).HasColumnName("nome").HasMaxLength(100).IsRequired();
             entity.Property(e => e.Senha).HasColumnName("senha").HasMaxLength(255).IsRequired();
+            entity.Property(e => e.Email).HasColumnName("email").HasMaxLength(100).IsRequired();
         });
 
         OnModelCreatingPartial(modelBuilder);

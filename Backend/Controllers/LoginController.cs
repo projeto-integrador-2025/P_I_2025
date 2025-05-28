@@ -29,6 +29,7 @@ namespace MonitoramentoAPI.Controllers
             {
                 Id = login.Id,
                 Nome = login.Nome,
+                Email = login.Email,
                 Senha = login.Senha
             });
 
@@ -48,6 +49,7 @@ namespace MonitoramentoAPI.Controllers
             {
                 Id = login.Id,
                 Nome = login.Nome,
+                Email = login.Email,
                 Senha = login.Senha
             };
 
@@ -63,6 +65,7 @@ namespace MonitoramentoAPI.Controllers
                 return NotFound();
 
             login.Nome = loginDTO.Nome;
+            login.Email = loginDTO.Email;
             login.Senha = loginDTO.Senha;
 
             try
@@ -87,6 +90,7 @@ namespace MonitoramentoAPI.Controllers
             var login = new Login
             {
                 Nome = loginDTO.Nome,
+                Email = loginDTO.Email,
                 Senha = loginDTO.Senha
             };
 
@@ -97,6 +101,7 @@ namespace MonitoramentoAPI.Controllers
             {
                 Id = login.Id,
                 Nome = login.Nome,
+                Email = loginDTO.Email,
                 Senha = login.Senha
             };
 

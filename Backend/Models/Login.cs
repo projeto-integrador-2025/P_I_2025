@@ -17,7 +17,12 @@ public partial class Login
     [StringLength(100)]
     public string Nome { get; set; } = null!;
 
+    [Column("email")]
+    [StringLength(100)]
+    public string Email { get; set; } = null!;
+
     [Column("senha")]
     [StringLength(255)]
     public string Senha { get; set; } = null!;
+
 }
