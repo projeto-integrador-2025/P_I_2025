@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Chatbot Interface</title>
+<link rel="stylesheet" href="/static/style.css">
+<style>
+    /* Mantém seu estilo exatamente igual */
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 50px auto;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #676767;
+    }
+
+    .chat-box {
+        max-height: 500px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .message {
+        padding: 10px 15px;
+        border-radius: 10px;
+        max-width: 90%;
+        white-space: pre-wrap;
+    }
+
+    .user {
+        background-color: #e1f5fe;
+        align-self: flex-end;
+    }
+
+    .bot {
+        background-color: #e8f5e9;
+        align-self: flex-start;
+    }
+
+    form {
+        display: flex;
+        gap: 10px;
+    }
+
+    input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Chatbot com Histórico</h1>
+
+<div class="chat-box" id="chat-box">
+    {% for entry in chat_history %}
+    <div class="message user"><strong>Você:</strong> {{ entry.user }}</div>
+    <div class="message bot"><strong>Bot:</strong> {{ entry.bot | safe }}</div>
+    {% endfor %}
+</div>
+
+<form id="chat-form">
+    <input type="text" id="user-input" placeholder="Digite sua mensagem..." required autofocus>
+    <button type="submit">Enviar</button>
+</form>
+</div>
+
+<script>
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('user-input');
+    const chatBox = document.getElementById('chat-box');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();  // impede o recarregamento
+
+        const userMessage = input.value.trim();
+        if (userMessage === '') return;
+
+        // exibe a mensagem do usuário
+        const userDiv = document.createElement('div');
+        userDiv.className = 'message user';
+        userDiv.innerHTML = '<strong>Você:</strong> ' + userMessage;
+        chatBox.appendChild(userDiv);
+
+        // envia para o Flask via JSON
+        fetch('/send_message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: userMessage })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const botDiv = document.createElement('div');
+            botDiv.className = 'message bot';
+            botDiv.innerHTML = '<strong>Bot:</strong> ' + data.response;
+            chatBox.appendChild(botDiv);
+
+            // rola para o fim
+            chatBox.scrollTop = chatBox.scrollHeight;
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+
+        input.value = '';  // limpa o input
+    });
+</script>
+
+</body>
+</html>
