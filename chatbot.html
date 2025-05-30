@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Página Chatbot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <section>
+        <div class="sidebar">
+            <h2>Painel</h2>
+            <button id="btnDashboard">Dashboard</button>
+            <button id="btnChatbot">Chatbot</button>
+            <button id="btnMonitoramento">Monitoramento</button>
+        </div>
+
+        <div class="box-question">
+            <div class="header">
+                <h5>ChatBot Projeto Integrador</h5>
+            </div>
+            <div class="logo">
+                <img src="img/logo.png" alt="logo">
+            </div>
+            <p id="status"></p>
+            <div id="historic">
+                <!-- Aqui está o chat -->
+            </div>
+            <div class="footer">
+                <input type="text" placeholder="Pergunte Aqui..." id="mesasage-input">
+                <button id="btn-submit" onclick="sendMessage()">Enviar</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+</html>
