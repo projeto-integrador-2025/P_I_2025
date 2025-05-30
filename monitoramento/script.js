@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Contadores
       let qtdMetal = 0;
       let qtdPlasticos = 0;
-      let qtdRejeitados = 0;  // Vou deixar zero porque você não passou a regra
+      let qtdRejeitados = 0; 
 
       data.forEach(peca => {
         if (peca.tipoMaterial.toLowerCase() === 'metal') {
@@ -15,12 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (peca.tipoMaterial.toLowerCase() === 'plástico' || peca.tipoMaterial.toLowerCase() === 'plastico') {
           qtdPlasticos++;
         }
-        // Se quiser, pode adaptar para rejeitados conforme sua regra
+        
       });
 
       const qtdTotal = qtdMetal + qtdPlasticos;
 
-      // Atualiza no HTML
+      
       document.getElementById('qtdMetal').textContent = `Qtd Metal: ${qtdMetal}`;
       document.getElementById('qtdPlasticos').textContent = `Qtd Plásticos: ${qtdPlasticos}`;
       document.getElementById('qtdTotal').textContent = `Qtd Total: ${qtdTotal}`;
