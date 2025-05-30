@@ -1,266 +1,159 @@
+body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f0d8;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+    }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+    img{
 
-*{
-    margin: 0%;
-    padding: 0%;
-    background-color: #f0f0d8;
-    font-family: "Roboto", sans-serif;
-  
+      width:80px;
+    }
+    .sidebar {
+      
+      margin-top:10px;
+      margin-left:10px;
+      width:220px;
+      height:90vh;
+      background-color: #77cca4;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      border-radius:10px;
+    }
 
-}
-body{
+    .sidebar h2 {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
 
-display: flex;
-flex-direction: column;
+    .sidebar a {
+      color:black;
+      text-decoration: none;
+      padding: 10px 0;
+      display: block;
+      transition: background 0.3s;
+    }
 
+    .sidebar a:hover {
+      background-color:#f0f0d8be;
+      border-radius: 5px;
+      padding-left: 10px;
+    }
 
-}
-header{
+    .fundo {
+      flex-grow: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
 
-    width:150%;
-    background-color: #f0f0d8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    .dashboard-title {
+      margin-bottom: 30px;
+    }
 
-.tudo{
-  display: flex;
-  flex-direction: row;
-}
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s;
+      height: 100%;
+      color: #77cca4;
+    }
 
-.bloco-direita{
-  display: flex;
-  flex-direction: column;
-}
+    .card:hover {
+      transform: translateY(-5px);
+    }
 
-section.container{
+    .card canvas {
+      margin-top: 10px;
+      width: 100% !important;
+      height: 320px !important;
+    }
 
-    display: flex;
-    flex-direction: row;
-    width: 140%;
-    height:53vh;
-    background-color: #b4debe;
-    margin-left:8%;
-    margin-top:1%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius:20px;
-
-}
-section.filho1{
-
-    background-color: #f0f0d8;
-    width:33%;
-    height:41vh;
-    margin-top:2%;
-    margin-left:3%;
-    border-radius:20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    padding: 20px;
-}
-
-
-section.filho2 {
-    background-color: #f0f0d8;
-    width: 52%; 
-    height: 40vh;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-top:2.5%;
-    margin-left:2%;
-   
-    
+    @media screen and (max-width: 768px) {
+  body {
+    flex-direction: column; 
+    height: auto; 
   }
 
-section.filho2 h3{
+  .sidebar {
+    width: 100%; 
+    height: auto; 
+    margin: 0; 
+    border-radius: 0; 
+    padding: 15px; 
+  }
 
-    margin-left:10%;
-    margin-top:3%;
-    font-size: 27px;
-    color: rgba(59, 59, 50, 0.815);
+  .sidebar h2 {
+    font-size: 1rem; 
+    margin-bottom: 20px;
+  }
 
-}
-section.filho1 h3{
+  .sidebar a {
+    padding: 8px 0; 
+    font-size: 0.9rem; 
+  }
 
-    margin-left:10%;
-    margin-top:3%;
-    font-size: 27px;
-    color: rgba(59, 59, 50, 0.815);
+  .fundo {
+    padding: 15px; 
+  }
 
-}
-section.container2{
+  .dashboard-title {
+    font-size: 1.5rem; 
+    margin-bottom: 20px;
+  }
 
-    display: flex;
-    flex-direction: row;
-    width: 140%;
-    height:33vh;
-    background-color: #b4debe;
-    margin-left:8%;
-    margin-top:1%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius:20px;
-}
-section.filho3{
+  .card {
+    margin-bottom: 20px; 
+  }
 
-    margin-left:3%;
-    margin-top:1%;
-    height:23vh;
-    width: 90%;
-    font-size: 27px;
-    color: rgba(59, 59, 50, 0.815);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    border-radius:20px;
-}
+  .card canvas {
+    height: 200px !important; 
+  }
 
-
-
-canvas {
-  width: 100% !important;
-  height: 70% !important;
-}
-
-
-
-
-    /* Sidebar */
-    .sidebar {
-        width: 220px;
-        height:90vh;
-        background-color: #b4debe;
-        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
-        padding: 30px 20px;
-        display: flex;
-        flex-direction: column;
-        border-radius:20px;
-        gap: 20px;
-      }
   
-      .sidebar h2 {
-        font-size: 20px;
-        color: #4b4b2e;
-        margin-bottom: 30px;
-        text-align: center;
-       
-      }
-  
-      .sidebar button {
-        padding: 12px 16px;
-        font-size: 16px;
-        color: #4b4b2e;
-        background-color: #f0f0d8;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        text-align: left;
-        transition: background-color 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-  
-      .sidebar button:hover {
-        background-color: #cfcf9e;
-      }
-  
+  .row {
+    flex-direction: column;
+  }
 
-      .main-content {
-        flex-grow: 1;
-        padding: 30px;
-      }
+  .col-lg-4,
+  .col-md-6,
+  .col-md-12 {
+    width: 100%; 
+  }
+}
 
-      @media screen and (max-width: 768px) {
-        body {
-          flex-direction: column;
-          align-items: center;
-          
-        }
-      
-        header {
-          width: 100%;
-          flex-direction: column;
-          padding: 10px;
-          text-align: center;
-        }
-      
-        .tudo {
-          flex-direction: column;
-          align-items: center;
-        }
-      
-        .bloco-direita {
-          width: 100%;
-          align-items: center;
-        }
-      
-        .sidebar {
-          width: 90%;
-          height: auto;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 10px;
-          padding: 20px 10px;
-        }
-      
-        .sidebar h2 {
-          display: none; /* Oculta o título da sidebar em telas pequenas */
-        }
-      
-        .sidebar button {
-          width: 100%;
-          margin-bottom: 10px;
-          font-size: 14px;
-          text-align: center;
-        }
-      
-        section.container{
-          flex-direction: column;
-          width: 90%;
-          height:auto;
-          margin: 20px auto;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          
-          
-        }
-        section.container2 {
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width: 90%;
-          height: auto;
-          margin: 20px auto;
-        }
-      
-        section.filho1,
-        section.filho2,
-        section.filho3 {
-          flex-direction: column;
-          width: 80%;
-          height: auto;
-          margin: 20px auto;
-          height: auto;
-          margin: 10px 0;
-        
-        }
-      
-        section.filho1 h3,
-        section.filho2 h3 {
-          margin: 10px 0;
-          text-align: center;
-        }
-      
-        .main-content {
-          padding: 10px;
-        }
-        canvas {
-          width: 90% !important;
-          height: auto !important;
-          max-height: 300px;
-        }
-        
-      }
+
+@media screen and (max-width: 576px) {
+  .sidebar h2 {
+    font-size: 0.9rem; 
+  }
+
+  .sidebar a {
+    font-size: 0.8rem;
+    padding: 6px 0;
+  }
+
+  .fundo{
+    padding: 10px; 
+  }
+
+  .dashboard-title {
+    font-size: 1.2rem; 
+  }
+
+  .card canvas {
+    height: 150px !important; 
+  }
+
+  .card h5 {
+    font-size: 1rem; 
+  }
+
+  .card p {
+    font-size: 0.9rem; 
+  }
+}
+

@@ -1,149 +1,140 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Gráfico de Materiais Processados
-    const ctx = document.getElementById('graficoMateriais').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
+const labels = Array.from({ length: 10 }, (_, i) => `T-${i + 1}`);
+
+    const chartVolume = new Chart(document.getElementById("chartVolume"), {
+      type: "line",
       data: {
-        labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+        labels,
         datasets: [{
-          label: 'Unidades Processadas',
-          data: [1200, 1450, 1100, 1500, 1600, 900],
-          backgroundColor: '#E9E9E9',
-          borderRadius: 8
+          label: "Volume (kg)",
+          data: [],
+          borderColor: "#0d6efd",
+          backgroundColor: "rgba(13, 245, 253, 0.2)",
+          fill: true,
+          tension: 0.4,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          borderWidth: 3
         }]
       },
       options: {
-        responsive: true,
         maintainAspectRatio: false,
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              stepSize: 200
-            },
-            title: {
-              display: true,
-              text: 'Unidades'
-            }
-          },
-          x: {
-            title: {
-              display: true,
-              text: 'Dia da Semana'
-            }
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#fff',
+            titleColor: '#000',
+            bodyColor: '#000',
+            borderColor: '#ccc',
+            borderWidth: 1
           }
         },
-        plugins: {
-          legend: {
-            display: false
-          }
+        scales: {
+          y: { beginAtZero: true, ticks: { color: '#555' } },
+          x: { ticks: { color: '#555' } }
         }
       }
     });
-  
-    // Gráfico de Taxa de Erro
-    const erroCtx = document.getElementById('graficoErro').getContext('2d');
-    new Chart(erroCtx, {
-      type: 'pie',
+
+    const chartErro = new Chart(document.getElementById("chartErro"), {
+      type: "bar",
       data: {
-        labels: ['Erros em Metais', 'Erros em Plástico', 'Acertos'],
+        labels,
         datasets: [{
-          label: 'Distribuição',
-          data: [8, 5, 87],
-          backgroundColor: [
-            '#e57373',
-            '#ffb74d',
-            '#81c784'
-          ],
-          borderColor: '#ffffff',
+          label: "Erro (%)",
+          data: [],
+          backgroundColor: "#dc3545",
+          borderRadius: 8,
+          barThickness: 20
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#fff',
+            titleColor: '#000',
+            bodyColor: '#000',
+            borderColor: '#ccc',
+            borderWidth: 1
+          }
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { color: '#555' } },
+          x: { ticks: { color: '#555' } }
+        }
+      }
+    });
+
+    const chartDesempenho = new Chart(document.getElementById("chartDesempenho"), {
+      type: "radar",
+      data: {
+        labels: ["Velocidade", "Qualidade", "Eficiência", "Disponibilidade", "Rendimento"],
+        datasets: [{
+          label: "Desempenho",
+          data: [0, 0, 0, 0, 0],
+          backgroundColor: "rgba(40,167,69,0.3)",
+          borderColor: "#28a745",
+          pointBackgroundColor: "#28a745",
+          pointRadius: 5,
+          pointHoverRadius: 7,
           borderWidth: 2
         }]
       },
       options: {
-        responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              boxWidth: 18,
-              boxHeight: 18,
-              color: '#333',
-              font: {
-                size: 14,
-                weight: '500'
-              },
-              padding: 15
-            }
-          },
+          legend: { display: false },
           tooltip: {
-            backgroundColor: '#ffffff',
-            titleColor: '#111',
-            bodyColor: '#444',
+            backgroundColor: '#fff',
+            titleColor: '#000',
+            bodyColor: '#000',
             borderColor: '#ccc',
             borderWidth: 1
           }
-        }
-      }
-    });
-  
-    // Gráfico de Desempenho
-    const ctp = document.getElementById('graficoDesempenho').getContext('2d');
-    new Chart(ctp, {
-      type: 'line',
-      data: {
-        labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-        datasets: [{
-          label: 'Produção (Unidades)',
-          data: [1100, 1250, 1320, 1280, 1400, 950],
-          fill: true,
-          backgroundColor: 'rgba(79, 70, 229, 0.1)',
-          borderColor: '#4f46e5',
-          borderWidth: 2,
-          tension: 0.4,
-          pointBackgroundColor: '#4f46e5',
-          pointBorderColor: '#fff',
-          pointRadius: 5
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Unidades'
-            }
-          },
-          x: {
-            title: {
-              display: true,
-              text: 'Dia da Semana'
-            }
-          }
         },
-        plugins: {
-          legend: {
-            display: false
+        scales: {
+          r: {
+            angleLines: { color: '#ccc' },
+            grid: { color: '#eee' },
+            pointLabels: { color: '#555' },
+            ticks: { color: '#555', beginAtZero: true, max: 100 }
           }
         }
       }
     });
+
+    function atualizarDados() {
+      const volume = Math.floor(Math.random() * 1000 + 500);
+      const erro = (Math.random() * 5).toFixed(2);
+      const desempenho = Array.from({ length: 5 }, () => (Math.random() * 50 + 50).toFixed(1));
+
+      document.getElementById("volume").textContent = `${volume} kg`;
+      document.getElementById("erro").textContent = `${erro}%`;
+      document.getElementById("desempenho").textContent = `${(
+        desempenho.reduce((a, b) => parseFloat(a) + parseFloat(b), 0) / 5
+      ).toFixed(1)}%`;
+
+      if (chartVolume.data.datasets[0].data.length >= 10) {
+        chartVolume.data.datasets[0].data.shift();
+        chartErro.data.datasets[0].data.shift();
+      }
+
+      chartVolume.data.datasets[0].data.push(volume);
+      chartErro.data.datasets[0].data.push(parseFloat(erro));
+      chartDesempenho.data.datasets[0].data = desempenho;
+
+      chartVolume.update();
+      chartErro.update();
+      chartDesempenho.update();
+    }
+
+    setInterval(atualizarDados, 3000);
+    atualizarDados();
+
+    const toggleBtn = document.getElementById('toggleSidebar');
+  const sidebar = document.getElementById('sidebar');
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('hidden');
   });
-
-
-  document.getElementById('btnDashboard').onclick = function () {
-    window.location.href = 'Dashboard.html';
-  };
-  
-  document.getElementById('btnChatbot').onclick = function () {
-    window.location.href = 'chatbot.html';
-  };
-  
-  document.getElementById('btnMonitoramento').onclick = function () {
-    window.location.href = 'monitoramento.html';
-  };
-  
-  

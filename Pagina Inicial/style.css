@@ -8,6 +8,11 @@ body {
      font-family: "Roboto", sans-serif;
    
 }
+a{
+    text-decoration: none;
+    color: aliceblue;
+}
+
 
 .container {
     display: flex;
@@ -166,7 +171,12 @@ input:focus{
     color: #7f8c8d;
     padding: 0 5px;
 }
-
+.error-message {
+            color: #ff3333;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
 
 
 /*VERSÃO MOBILE*/
