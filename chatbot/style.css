@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 body {
   font-family: 'Segoe UI', sans-serif;
   background-color: #f0f0d8;
@@ -5,6 +6,7 @@ body {
   display: flex;
   flex-direction: row;
   min-height: 100vh; 
+  font-family: "Roboto", sans-serif;
 }
 
 .barra-lateral {
