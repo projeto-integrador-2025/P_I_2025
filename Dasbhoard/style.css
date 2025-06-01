@@ -127,8 +127,18 @@ body {
 
 
 @media screen and (max-width: 576px) {
+  .sidebar{
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    margin: 0;
+    overflow-x: auto; 
+
+  }
+
   .sidebar h2 {
-    font-size: 0.9rem; 
+    display: none;
   }
 
   .sidebar a {
