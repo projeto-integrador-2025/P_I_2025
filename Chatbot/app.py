@@ -7,6 +7,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
+from flask_cors import CORS
+CORS(app)
 
 openai.api_key = os.getenv('GROQ_API_KEY')  
 openai.api_base = 'https://api.groq.com/openai/v1'
