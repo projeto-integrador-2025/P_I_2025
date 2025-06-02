@@ -33,6 +33,7 @@
       width: 80px;
     }
     .sidebar h2 {
+      text-align: left;
       font-size: 1.2rem;
       margin-bottom: 30px;
     }

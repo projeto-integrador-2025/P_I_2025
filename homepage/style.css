@@ -11,3 +11,95 @@ nav{
     background-color: #77cca4;
 
 }
+ .secao-fundo {
+            background: url('https://via.placeholder.com/1920x1080') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+        .secao-fundo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .secao-fundo .container {
+            position: relative;
+            z-index: 2;
+        }
+        .secao-fundo .btn-entrar {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .secao-fundo .btn-entrar:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+        .secao {
+            padding: 60px 0;
+        }
+        .cartao-equipe {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            background-color: #fff;
+            overflow: hidden;
+        }
+        .cartao-equipe:hover {
+            transform: translateY(-5px);
+        }
+        .cartao-equipe img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .cartao-equipe .corpo-cartao {
+            text-align: center;
+            padding: 20px;
+        }
+        .cartao-equipe .titulo-cartao {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+        .cartao-equipe .texto-cartao {
+            color: #6c757d;
+        }
+        .controle-carrossel-anterior, .controle-carrossel-proximo {
+            width: 5%;
+        }
+        .icone-controle-carrossel-anterior, .icone-controle-carrossel-proximo {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+        }
+        .indicadores-carrossel {
+            bottom: -50px;
+        }
+        .indicadores-carrossel [data-bs-target] {
+            background-color: #007bff;
+        }
+        .logo-tecnologia {
+            width: 80px;
+            height: 80px;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        .logo-tecnologia:hover {
+            transform: scale(1.1);
+        }
+        .logo-navegacao {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
