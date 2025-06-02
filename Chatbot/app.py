@@ -8,7 +8,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})  # Permite todas as origens (durante desenvolvimento)
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:5500"]}})
+ 
 
 # Define chave da API Groq
 openai.api_key = os.getenv('GROQ_API_KEY')
