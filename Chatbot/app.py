@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request, jsonify
 import openai
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
-# Carregar API Key de variável de ambiente
+
 openai.api_key = os.getenv('GROQ_API_KEY')  
 openai.api_base = 'https://api.groq.com/openai/v1'
 
