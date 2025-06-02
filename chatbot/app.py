@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS  # CORS para permitir acesso do frontend (127.0.0.1:5500, etc)
+from flask import Flask, request, jsonify, send_file
+from flask_cors import CORS
 import openai
 import os
 from dotenv import load_dotenv
@@ -8,26 +8,26 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-from flask_cors import CORS
-
-app = Flask(__name__)
 CORS(app)
- 
 
-# Define chave da API Groq
+# Configuração da API Groq
 openai.api_key = os.getenv('GROQ_API_KEY')
 openai.api_base = 'https://api.groq.com/openai/v1'
 
-# Histórico de mensagens (temporário, para sessão atual)
+# Histórico de mensagens
 chat_history = []
 
 @app.route('/')
 def home():
-    return render_template('index.html', chat_history=chat_history)
+    return send_file('chatbot.html')  # Carrega diretamente o HTML da raiz
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
     data = request.get_json()
+
+    if not data or 'message' not in data:
+        return jsonify({'status': 'error', 'response': '[Mensagem inválida recebida]'}), 400
+
     user_message = data['message']
     bot_response = responder_com_groq(user_message)
 
@@ -49,5 +49,4 @@ def responder_com_groq(mensagem):
         return f"[Erro ao acessar IA: {str(e)}]"
 
 if __name__ == '__main__':
-    # Rode o backend acessível localmente em localhost:8000
     app.run(debug=True, host='localhost', port=8000)
