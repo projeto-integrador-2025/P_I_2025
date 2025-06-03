@@ -2,17 +2,17 @@ const login = () => {
 window.location.href = "http://127.0.0.1:5501/Pagina%20Inicial/index.html";
 
 }
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
   $(document).ready(function () {
     $('#registerForm').on('submit', function (e) {
       e.preventDefault();
 
-      // Limpar mensagens
+      
       $('.error-message').text('');
       $('#registerSuccess').text('');
 
-      // Capturar valores
+     
       const nome = $('#nome').val().trim();
       const email = $('#email').val().trim();
       const senha = $('#senha').val();
@@ -20,7 +20,6 @@ window.location.href = "http://127.0.0.1:5501/Pagina%20Inicial/index.html";
 
       let isValid = true;
 
-      // Validações
       if (nome === '') {
         $('#nomeError').text('Por favor, informe seu nome.');
         isValid = false;
@@ -45,10 +44,9 @@ window.location.href = "http://127.0.0.1:5501/Pagina%20Inicial/index.html";
         isValid = false;
       }
 
-      // Se for válido, enviar para a API
       if (isValid) {
         $.ajax({
-          url: 'https:localhost:5286/api/Login', // substitua pela URL real da sua API
+          url: 'http://localhost:5286/api/Login', 
           type: 'POST',
           contentType: 'application/json',
           data: JSON.stringify({
@@ -58,7 +56,7 @@ window.location.href = "http://127.0.0.1:5501/Pagina%20Inicial/index.html";
           }),
           success: function (response) {
             $('#registerSuccess').text('Cadastro realizado com sucesso!');
-            $('#registerForm')[0].reset(); // limpa o formulário
+            $('#registerForm')[0].reset();
           },
           error: function (xhr) {
             const errorMsg = xhr.responseJSON?.message || 'Erro ao cadastrar. Tente novamente.';
