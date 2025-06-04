@@ -5,7 +5,6 @@ async function enviarMensagem() {
 
   const chatBox = document.getElementById('caixaChat');
 
-  // Exibe a mensagem do usuário no chat
   const userDiv = document.createElement('div');
   userDiv.className = 'mensagem-chat';
   userDiv.innerHTML = `<span class='usuario-chat'>Você:</span> ${mensagem}`;
@@ -26,10 +25,9 @@ async function enviarMensagem() {
 
     const data = await response.json();
 
-    // Verifica se a resposta tem a propriedade 'response'
     const botMsg = data.response || '[Resposta inválida do servidor]';
 
-    // Exibe a resposta do bot no chat
+   
     const respostaDiv = document.createElement('div');
     respostaDiv.className = 'mensagem-chat';
     respostaDiv.innerHTML = `<span class='usuario-chat'>Bot:</span> ${botMsg}`;
@@ -38,14 +36,14 @@ async function enviarMensagem() {
   } catch (error) {
     console.error('Erro ao enviar mensagem:', error);
 
-    // Mostra erro caso a API falhe
+   
     const erroDiv = document.createElement('div');
     erroDiv.className = 'mensagem-chat';
     erroDiv.innerHTML = `<span class='usuario-chat'>Bot:</span> [Erro ao se comunicar com o servidor]`;
     chatBox.appendChild(erroDiv);
   }
 
-  // Limpa o input e rola para o final do chat
+ 
   input.value = '';
   chatBox.scrollTop = chatBox.scrollHeight;
 }

@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-  const API_URL = 'http://localhost:5286/api/Login/verificar';
+  const API_URL ='http://localhost:5286/api/Login/verificar';
 
   
   $('#loginForm').on('submit', function (e) {
@@ -27,10 +27,8 @@ $(document).ready(function () {
     }
 
     if (!isValid) return;  
-
-    
     $.ajax({
-      url: API_URL,
+      url:'http://localhost:5286/api/Login/verificar',
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({
@@ -39,11 +37,10 @@ $(document).ready(function () {
       }),
       success: function (response) {
         
-
-
         localStorage.setItem('usuarioLogado', JSON.stringify(response));
         alert('O login bem sucedido');
-        window.location.href = '../home page/index.html'; 
+        window.location.href ='http://127.0.0.1:5501/P_I_2025/Dasbhoard/Dashboard.html';
+ 
       },
       error: function (xhr) {
         

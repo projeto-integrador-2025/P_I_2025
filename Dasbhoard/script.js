@@ -138,3 +138,20 @@ const labels = Array.from({ length: 10 }, (_, i) => `T-${i + 1}`);
   toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('hidden');
   });
+
+  $.ajax({
+  url: 'http://localhost:5286/api/Sensor',
+  method: 'GET',
+  dataType: 'json',
+  success: function(response) {
+    const labels = response.map(item => new Date(item.dataHora).toLocaleDateString());
+    const volumes = response.map(item => item.valor);
+
+    chartVolume.data.labels = labels;
+    chartVolume.data.datasets[0].data = volumes;
+    chartVolume.update();
+  },
+  error: function(xhr, status, error) {
+    console.error('Erro ao buscar dados do sensor:', error);
+  }
+});
