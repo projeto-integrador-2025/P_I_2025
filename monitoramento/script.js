@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const API_PECA = 'http://localhost:5286/api/Peca';
   const API_CICLO = 'http://localhost:5286/api/ciclo';
+  const API_ESTADO = 'http://localhost:5286/api/estacaoEstado';
 
   fetch(API_CICLO)
     .then(response => response.json())
@@ -27,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.getElementById('tempoTotal').textContent = `Tempo de Processo da Máquina: ${tempoTotalSegundos} s`;
 
-      
+
       let ultimaParadaFormatada = '-';
       if (ultimaParadaTimestamp) {
         const options = {
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
           minute: '2-digit',
           second: '2-digit',
           hour12: false,
-          timeZone: 'America/Sao_Paulo' 
+          timeZone: 'America/Sao_Paulo'
         };
         ultimaParadaFormatada = ultimaParadaTimestamp.toLocaleString('pt-BR', options);
       }
@@ -49,6 +50,23 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Erro ao buscar ciclos:', err);
     });
 
+fetch(API_ESTADO)
+  .then(response => response.json())
+  .then(estados => {
+    if (estados.length > 0) {
+      const estado = estados[0]; // Pega o primeiro (único) estado
+      const ligadoDesligado = estado.estado ? 'Ligado' : 'Desligado';
+      document.getElementById('esteira').textContent = `Esteira: ${ligadoDesligado}`;
+    } else {
+      document.getElementById('esteira').textContent = 'Esteira: -';
+    }
+  })
+  .catch(err => {
+    console.error('Erro ao buscar estados:', err);
+  });
+
+
+  
   fetch(API_PECA)
     .then(response => response.json())
     .then(data => {
@@ -58,10 +76,14 @@ document.addEventListener('DOMContentLoaded', () => {
       let qtdRejeitados = 0;
 
       data.forEach(peca => {
-        if (peca.tipoMaterial.toLowerCase() === 'metal') {
+        if (peca.tipoMaterial.toLowerCase() === 'metalica') {
           qtdMetal++;
         } else if (peca.tipoMaterial.toLowerCase() === 'plástico' || peca.tipoMaterial.toLowerCase() === 'plastico') {
           qtdPlasticos++;
+        }
+
+        else if (peca.tipoMaterial.toLowerCase() === 'refugo' || peca.tipoMaterial.toLowerCase() === 'refugo') {
+          qtdRejeitados++;
         }
       });
 

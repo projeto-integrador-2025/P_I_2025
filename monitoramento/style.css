@@ -15,35 +15,37 @@
        font-family: "Roboto", sans-serif;
     }
 
- .sidebar {
+    img{
+
+      width:80px;
+    }
+.sidebar {
       
       margin-top:10px;
       margin-left:10px;
-      width:220px;
+      width:197px;
       height:90vh;
       background-color: #77cca4;
       color: black;
       display: flex;
       flex-direction: column;
-      padding: 20px;
+      padding:15px;
       border-radius:10px;
     }
-    img{
 
-      width: 80px;
-    }
     .sidebar h2 {
-      text-align: left;
       font-size: 1.2rem;
-      margin-bottom: 30px;
+      margin-right:140px;
+      color: black;
     }
 
     .sidebar a {
       color:black;
       text-decoration: none;
-      padding: 10px 0;
+       padding: 10px 0;
       display: block;
       transition: background 0.3s;
+      margin-top:20px;
     }
 
     .sidebar a:hover {
@@ -110,14 +112,11 @@
 
   .sidebar {
     flex-direction: row; 
-    align-items: center;
-    justify-content: space-around;
+    
     width: 100%;
-    height: auto;
+    height:11vh;
     margin: 0;
-    padding: 10px 5px;
-    border-radius: 0;
-    flex-wrap: wrap;
+    padding-left:30px;
   
   }
 
@@ -128,7 +127,7 @@
   .sidebar img {
     width: 80px;
     height: auto;
-    margin: 0 auto;
+   
   }
 
   .sidebar a {
@@ -136,6 +135,7 @@
     font-size: 0.8rem;
     white-space: nowrap;
     padding-bottom:43px;
+    padding-left:20px;
   }
 
   .main-content {
@@ -158,4 +158,10 @@
     width: 100%;
     flex: 1 1 100%;
   }
+}
+
+#esteira{
+
+  color: green;
+
 }

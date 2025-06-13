@@ -22,13 +22,14 @@ body {
       color: black;
       display: flex;
       flex-direction: column;
-      padding: 20px;
+      padding: 15px;
       border-radius:10px;
+     
     }
 
     .sidebar h2 {
       font-size: 1.2rem;
-      margin-bottom: 30px;
+    
     }
 
     .sidebar a {
@@ -37,6 +38,7 @@ body {
       padding: 10px 0;
       display: block;
       transition: background 0.3s;
+      margin-top:20px;
     }
 
     .sidebar a:hover {
