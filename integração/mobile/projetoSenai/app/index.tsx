@@ -66,13 +66,12 @@ export default function LoginScreen() {
           
         
 
-        
-        <TouchableOpacity style={styles.button}>
-            <Link href="./entry">
-            <Text style={styles.buttonText}>Login{" "}</Text>
-            </Link>
-        </TouchableOpacity>
-             
+             <Link href="./entry">
+                <TouchableOpacity style={styles.button}>
+                  <Text style={styles.buttonText}>Login{" "}</Text>
+                </TouchableOpacity>
+             </Link>
+
         <Text style={styles.textFooter}>
             Não tem cadastro ainda?{" "}
             <Link href="./signUp">
@@ -155,8 +154,8 @@ const styles = StyleSheet.create({
   },
   
   button: {
-    width: '80%',
-    height: 50, // Botão mais alto também
+    width: 300,
+    height: 50,// Botão mais alto também
     backgroundColor: '#666',
     justifyContent: 'center',
     alignItems: 'center',
