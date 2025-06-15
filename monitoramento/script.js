@@ -54,7 +54,7 @@ fetch(API_ESTADO)
   .then(response => response.json())
   .then(estados => {
     if (estados.length > 0) {
-      const estado = estados[0]; // Pega o primeiro (único) estado
+      const estado = estados[0]; 
       const ligadoDesligado = estado.estado ? 'Ligado' : 'Desligado';
       document.getElementById('esteira').textContent = `Esteira: ${ligadoDesligado}`;
     } else {
