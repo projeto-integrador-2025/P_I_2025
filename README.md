@@ -45,7 +45,7 @@ Sistema escalável para diferentes contextos industriais.
 | ---------------------- | ----------------------------------------------------------------------------- |
 | Daniel Marques         | [dmarquesdemelosasiatico@gmail.com](mailto:dmarquesdemelosasiatico@gmail.com) |
 | Julia de Lima Torres   | [juliadelimatorres@hotmail.com](mailto:juliadelimatorres@hotmail.com)         |
-| João Eduardo Junior    | [jeduardojr.95@gmail.com](mailto:jeduardojr.95@gmail.com)                     |
+| José Eduardo Junior    | [jeduardojr.95@gmail.com](mailto:jeduardojr.95@gmail.com)                     |
 | Rafael Pecorari Barros | [rpecoraribarros4@gmail.com](mailto:rpecoraribarros4@gmail.com)               |
 | Samuel Silva | [samuelrbis1308@gmail.com](mailto:samuelrbis1308@gmail.com)                   |
 | Valentina Oliveira       | [vah.oliver.dpm@gmail.com](mailto:vah.oliver.dpm@gmail.com)                   |
