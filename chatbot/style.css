@@ -9,41 +9,44 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-.barra-lateral {
-  margin: 10px;
-  width: 220px;
-  background-color: #77cca4;
-  color: black;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  border-radius: 10px;
-  overflow-y: auto; 
-}
 
 img {
   width: 80px;
 }
 
-.barra-lateral h2 {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-}
+  .barra-lateral {
+      
+      margin-top:10px;
+      margin-left:10px;
+      width:197px;
+      height:90vh;
+      background-color: #77cca4;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      padding: 15px;
+     
+    }
 
-.barra-lateral a {
-  color: black;
-  text-decoration: none;
-  padding: 10px 0;
-  display: block;
-  transition: background 0.3s;
-}
+  .barra-lateral h2 {
+      font-size: 1.2rem;
+      
+    }
 
-.barra-lateral a:hover {
-  background-color: #f0f0d8be;
-  border-radius: 5px;
-  padding-left: 10px;
-}
+  .barra-lateral a {
+      color:black;
+      text-decoration: none;
+       padding: 10px 0;
+      display: block;
+      transition: background 0.3s;
+        margin-top:20px;
+    }
 
+  .barra-lateral a:hover {
+      background-color:#f0f0d8be;
+      border-radius: 5px;
+      padding-left: 10px;
+    }
 .conteudo {
   flex-grow: 1;
   padding: 20px;
@@ -136,6 +139,7 @@ input {
 
   .barra-lateral {
     width: 100%;
+    height:11vh;
     flex-direction: row;
     justify-content: space-around;
     padding: 10px;
@@ -171,9 +175,13 @@ input {
   .card p {
     font-size: 0.9rem;
   }
-
+  
   .container-chat {
     width: 100%;
     height: 70vh;
   }
+}
+img{
+
+  height:80px;
 }

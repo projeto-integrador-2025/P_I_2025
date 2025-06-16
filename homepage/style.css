@@ -12,12 +12,13 @@ nav{
 
 }
  .secao-fundo {
-            background: url('https://via.placeholder.com/1920x1080') no-repeat center center;
-            background-size: cover;
+            
             color: white;
+            background-color: #77cca4;
             padding: 100px 0;
             text-align: center;
             position: relative;
+            margin-top:70px;
         }
         .secao-fundo::before {
             content: '';
@@ -56,13 +57,15 @@ nav{
             transition: transform 0.3s ease;
             background-color: #fff;
             overflow: hidden;
+            margin-top:50px;
+            padding:40px;
         }
         .cartao-equipe:hover {
             transform: translateY(-5px);
         }
         .cartao-equipe img {
             width: 100%;
-            height: 200px;
+            height: 350px;
             object-fit: cover;
         }
         .cartao-equipe .corpo-cartao {
@@ -99,7 +102,79 @@ nav{
             transform: scale(1.1);
         }
         .logo-navegacao {
-            width: 40px;
-            height: 40px;
+            width: 80px;
+            height: 70px;
             object-fit: contain;
         }
+        .tela{
+
+            margin-top: 40px;
+     }
+
+     @media (max-width: 768px) {
+    .cartao-equipe {
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+    .cartao-equipe img {
+        height: 250px;
+    }
+
+    .secao-fundo h1 {
+        font-size: 1.8rem;
+    }
+
+    .secao-fundo p {
+        font-size: 1rem;
+    }
+
+    .secao-fundo .btn-entrar {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    .logo-tecnologia {
+        width: 60px;
+        height: 60px;
+    }
+
+    .tela img {
+        width: 100% !important;
+        height: auto !important;
+        margin-bottom: 20px;
+    }
+
+    .logo-navegacao {
+        width: 60px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 576px) {
+    .cartao-equipe img {
+        height: 200px;
+    }
+
+    .carousel-inner .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .secao-fundo {
+        padding: 60px 10px;
+    }
+
+    .secao-fundo .btn-entrar {
+        width: 100%;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .logo-tecnologia {
+        width: 50px;
+        height: 50px;
+    }
+}
