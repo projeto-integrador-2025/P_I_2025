@@ -1,3 +1,4 @@
+// Envia a mensagem do usuário para o servidor e exibe a resposta
 async function enviarMensagem() {
   const input = document.getElementById('entradaUsuario');
   const mensagem = input.value.trim();
@@ -13,21 +14,13 @@ async function enviarMensagem() {
   try {
     const response = await fetch('http://localhost:8000/send_message', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: mensagem })
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
     const data = await response.json();
-
     const botMsg = data.response || '[Resposta inválida do servidor]';
 
-   
     const respostaDiv = document.createElement('div');
     respostaDiv.className = 'mensagem-chat';
     respostaDiv.innerHTML = `<span class='usuario-chat'>Bot:</span> ${botMsg}`;
@@ -35,15 +28,36 @@ async function enviarMensagem() {
 
   } catch (error) {
     console.error('Erro ao enviar mensagem:', error);
-
-   
     const erroDiv = document.createElement('div');
     erroDiv.className = 'mensagem-chat';
     erroDiv.innerHTML = `<span class='usuario-chat'>Bot:</span> [Erro ao se comunicar com o servidor]`;
     chatBox.appendChild(erroDiv);
   }
 
- 
   input.value = '';
   chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+// Ativa o envio ao pressionar Enter
+document.getElementById('entradaUsuario').addEventListener('keydown', function (event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    enviarMensagem();
+  }
+});
+
+// Exibe mensagem de boas-vindas ao carregar a página
+window.addEventListener('DOMContentLoaded', () => {
+  const chatBox = document.getElementById('caixaChat');
+
+  const welcomeDiv = document.createElement('div');
+  welcomeDiv.className = 'mensagem-chat';
+  welcomeDiv.innerHTML = `<span class='usuario-chat'>Bot:</span> Olá! 👋 Seja bem-vindo ao nosso atendimento automático.<br>
+  Você pode me perguntar sobre:<br>
+  - 📞 <strong>Contato</strong><br>
+  - 🕒 <strong>Horário de funcionamento</strong><br>
+  - ℹ️ <strong>Quem sou eu</strong><br>
+  - ❓ Digite <strong>ajuda</strong> para ver tudo que posso fazer por você.`;
+
+  chatBox.appendChild(welcomeDiv);
+});
