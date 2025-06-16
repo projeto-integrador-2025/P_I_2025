@@ -11,37 +11,74 @@ respostas = {
     "oi": "Oi! Tudo bem? Em que posso te ajudar?",
     "quem sou eu": "Sou um chatbot simples feito para responder perguntas básicas.",
     "ajuda": (
-        "Claro! Estou aqui para ajudar. Você pode me perguntar sobre:<br>"
+        "Claro! Você pode me perguntar sobre:<br>"
         "- Contato<br>"
-        "- Horários de funcionamento<br>"
-        "- Quantidade de peças<br>"
-        "- Dados da máquina"
+        "- Estado das estações<br>"
+        "- Peças por material<br>"
+        "- Ciclos recentes<br>"
+        "- Sensores instalados<br>"
+        "- Detecções recentes<br>"
+        "- Usuários do sistema"
     ),
     "contato": "Você pode entrar em contato conosco pelo e-mail projeto.integrador@gmail.com",
-    "horario": "Funcionamos de segunda a sexta, das 18:45h às 23:00h.",
     "obrigado": "De nada! 😊",
-    "quantidade de peças": (
-        "Aqui estão as quantidades de peças:<br>"
-        "- Qtd Metal: 120<br>"
-        "- Qtd Plásticos: 230<br>"
-        "- Qtd Total: 350<br>"
-        "- Qtd Rejeitados: 15"
-    ),
-    "dados da maquina": (
-        "Aqui estão os dados da máquina:<br>"
-        "- Esteiras: Ativadas<br>"
-        "- Ativador: Funcionando<br>"
-        "- Tempo de Processo da Máquina: 04:35<br>"
-        "- Última Parada: 12 minutos atrás<br>"
-        "- Erros: 0.0"
-    ),
 }
 
 def responder_mensagem(mensagem):
     mensagem = mensagem.lower().strip()
+
+    if "estado das estações" in mensagem:
+        return (
+            "Estado atual das estações:<br>"
+            "- Estação 1: Ligada<br>"
+            "- Estação 2: Desligada<br>"
+            "- Estação 3: Ligada"
+        )
+
+    elif "peças por material" in mensagem:
+        return (
+            "Quantidade de peças por tipo de material:<br>"
+            "- Metal: 120<br>"
+            "- Plástico: 230<br>"
+            "- Vidro: 45"
+        )
+
+    elif "ciclos recentes" in mensagem:
+        return (
+            "Últimos ciclos registrados:<br>"
+            "- Peça 101 na Estação 1 – Início: 14:22<br>"
+            "- Peça 102 na Estação 2 – Início: 14:24<br>"
+            "- Peça 103 na Estação 1 – Início: 14:26"
+        )
+
+    elif "sensores instalados" in mensagem:
+        return (
+            "Sensores instalados:<br>"
+            "- Sensor Temperatura – Estação 1<br>"
+            "- Sensor Presença – Estação 2<br>"
+            "- Sensor Vibração – Estação 3"
+        )
+
+    elif "detecções recentes" in mensagem or "detecções recentes" in mensagem:
+        return (
+            "Últimas detecções:<br>"
+            "- Sensor 1 – 14:30<br>"
+            "- Sensor 2 – 14:31<br>"
+            "- Sensor 1 – 14:33"
+        )
+
+    elif "usuarios do sistema" in mensagem or "usuários do sistema" in mensagem:
+        return (
+            "Usuários cadastrados:<br>"
+            "- João Silva<br>"
+            "- Maria Oliveira<br>"
+            "- Carlos Mendes"
+        )
+
     for chave in respostas:
         if chave in mensagem:
             return respostas[chave]
+
     return "Desculpe, não entendi sua pergunta. Tente reformular ou digite 'ajuda'."
 
 @app.route('/')
