@@ -50,14 +50,10 @@ document.getElementById('entradaUsuario').addEventListener('keydown', function (
 window.addEventListener('DOMContentLoaded', () => {
   const chatBox = document.getElementById('caixaChat');
 
-  const welcomeDiv = document.createElement('div');
-  welcomeDiv.className = 'mensagem-chat';
-  welcomeDiv.innerHTML = `<span class='usuario-chat'>Bot:</span> Olá! 👋 Seja bem-vindo ao nosso atendimento automático.<br>
-  Você pode me perguntar sobre:<br>
-  - 📞 <strong>Contato</strong><br>
-  - 🕒 <strong>Horário de funcionamento</strong><br>
-  - ℹ️ <strong>Quem sou eu</strong><br>
-  - ❓ Digite <strong>ajuda</strong> para ver tudo que posso fazer por você.`;
+const welcomeDiv = document.createElement('div');
+welcomeDiv.className = 'mensagem-chat';
+welcomeDiv.innerHTML = `<span class='usuario-chat'>Bot:</span> Olá, seja Bem-vindo ao Chat, estou aqui para ajudar.`;
+
 
   chatBox.appendChild(welcomeDiv);
 });
