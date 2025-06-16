@@ -14,10 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const inicio = new Date(ciclo.tempoInicial);
         const fim = new Date(ciclo.timestampCiclo);
 
-        const duracao = fim - inicio; // em milissegundos
+        const duracao = fim - inicio; 
         tempoTotalMs += duracao;
 
-        // Verifica se é o mais recente
         if (!ultimaParadaTimestamp || fim > ultimaParadaTimestamp) {
           ultimaParadaTimestamp = fim;
           ultimaEstacao = ciclo.idEstacao;
