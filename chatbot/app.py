@@ -1,101 +1,112 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
+import requests
+from datetime import datetime
 
 app = Flask(__name__)
+# Permite o uso de CORS para requisições externas 
 CORS(app)
 
-chat_history = []
+API_BASE_URL = "http://localhost:5286/api"
 
-respostas = {
-    "ola": "Olá! Como posso ajudar você?",
-    "oi": "Oi! Tudo bem? Em que posso te ajudar?",
-    "quem sou eu": "Sou um chatbot simples feito para responder perguntas básicas.",
-    "ajuda": (
-        "Claro! Você pode me perguntar sobre:<br>"
-        "- Contato<br>"
-        "- Estado das estações<br>"
-        "- Peças por material<br>"
-        "- Ciclos recentes<br>"
-        "- Sensores instalados<br>"
-        "- Detecções recentes<br>"
-        "- Usuários do sistema"
-    ),
-    "contato": "Você pode entrar em contato conosco pelo e-mail projeto.integrador@gmail.com",
-    "obrigado": "De nada! 😊",
+ROTAS = {
+    "peca": ["peça", "pecas", "peças", "componente", "componentes"],
+    "sensor": ["sensor", "sensores", "detecção", "leitura"],
+    "ciclo": ["ciclo", "ciclos", "processo", "produção"],
+    "estacao": ["estação", "estacao", "estacoes", "estação de trabalho", "linha"],
+    "estacaoestado": ["estado", "estados", "status", "situação da estação"],
+    "deteccaosensor": ["detecção de sensor", "leitura de sensor", "evento de sensor", "registro de sensor"]
 }
 
-def responder_mensagem(mensagem):
+# Função para calcular a duração entre dois timestamps ISO
+def formatar_duracao(inicio_str, fim_str):
+    try:
+        inicio = datetime.fromisoformat(inicio_str)
+        fim = datetime.fromisoformat(fim_str)
+        duracao = fim - inicio
+        return str(duracao)
+    except:
+        return "Indefinida"
+
+def consultar_api(mensagem):
     mensagem = mensagem.lower().strip()
 
-    if "estado das estações" in mensagem:
-        return (
-            "Estado atual das estações:<br>"
-            "- Estação 1: Ligada<br>"
-            "- Estação 2: Desligada<br>"
-            "- Estação 3: Ligada"
-        )
+    # Verifica se alguma palavra-chave está na mensagem
+    for rota, palavras in ROTAS.items():
+        if any(palavra in mensagem for palavra in palavras):
+            response = requests.get(f"{API_BASE_URL}/{rota.capitalize()}")
 
-    elif "peças por material" in mensagem:
-        return (
-            "Quantidade de peças por tipo de material:<br>"
-            "- Metal: 120<br>"
-            "- Plástico: 230<br>"
-            "- Vidro: 45"
-        )
+            if response.status_code == 200:
+                dados = response.json()
 
-    elif "ciclos recentes" in mensagem:
-        return (
-            "Últimos ciclos registrados:<br>"
-            "- Peça 101 na Estação 1 – Início: 14:22<br>"
-            "- Peça 102 na Estação 2 – Início: 14:24<br>"
-            "- Peça 103 na Estação 1 – Início: 14:26"
-        )
+                # Trata resposta específica para a rota 'peca'
+                if rota == "peca" and isinstance(dados, list):
+                    materiais = [item.get("material", "Desconhecido") for item in dados]
+                    materiais_unicos = sorted(set(materiais))
+                    return "Materiais encontrados nas peças:\n" + "\n".join(f"- {m}" for m in materiais_unicos)
 
-    elif "sensores instalados" in mensagem:
-        return (
-            "Sensores instalados:<br>"
-            "- Sensor Temperatura – Estação 1<br>"
-            "- Sensor Presença – Estação 2<br>"
-            "- Sensor Vibração – Estação 3"
-        )
+                elif rota == "ciclo" and isinstance(dados, list):
+                    ciclos_formatados = []
+                    for i, item in enumerate(dados, start=1):
+                        inicio = item.get("tempoInicial", "Não informado")
+                        fim = item.get("timestampCiclo", "Não informado")
+                        duracao = formatar_duracao(inicio, fim)
+                        ciclos_formatados.append(
+                            f"Ciclo {i}:\n"
+                            f"  Início: {inicio}\n"
+                            f"  Fim: {fim}\n"
+                            f"  Duração: {duracao}"
+                        )
+                    return "Informações dos ciclos:\n\n" + "\n\n".join(ciclos_formatados)
 
-    elif "detecções recentes" in mensagem or "detecções recentes" in mensagem:
-        return (
-            "Últimas detecções:<br>"
-            "- Sensor 1 – 14:30<br>"
-            "- Sensor 2 – 14:31<br>"
-            "- Sensor 1 – 14:33"
-        )
+                elif rota == "estacao" and isinstance(dados, list):
+                    estacoes = []
+                    for i, item in enumerate(dados, start=1):
+                        nome = item.get("nome", f"Estação ID {item.get('idEstacao', 'Desconhecido')}")
+                        estacoes.append(f"{i}. {nome}")
+                    return "Estações identificadas:\n" + "\n".join(estacoes)
 
-    elif "usuarios do sistema" in mensagem or "usuários do sistema" in mensagem:
-        return (
-            "Usuários cadastrados:<br>"
-            "- João Silva<br>"
-            "- Maria Oliveira<br>"
-            "- Carlos Mendes"
-        )
+                elif rota == "sensor" and isinstance(dados, list):
+                    sensores = []
+                    for i, item in enumerate(dados, start=1):
+                        tipo = item.get("tipo", "Desconhecido")
+                        sensores.append(f"{i}. Tipo: {tipo}")
+                    return "Sensores cadastrados:\n" + "\n".join(sensores)
 
-    for chave in respostas:
-        if chave in mensagem:
-            return respostas[chave]
+                elif rota == "estacaoestado" and isinstance(dados, list):
+                    estados = []
+                    for i, item in enumerate(dados, start=1):
+                        status = item.get("estado", "Sem status")
+                        data = item.get("dataHora", "Sem data")
+                        estados.append(f"{i}. Estado: {status} em {data}")
+                    return "Estados das estações:\n" + "\n".join(estados)
 
-    return "Desculpe, não entendi sua pergunta. Tente reformular ou digite 'ajuda'."
+                elif rota == "deteccaosensor" and isinstance(dados, list):
+                    deteccoes = []
+                    for i, item in enumerate(dados, start=1):
+                        timestamp = item.get("timestamp", "Sem horário")
+                        deteccoes.append(f"{i}. Evento detectado em: {timestamp}")
+                    return "Detecções registradas:\n" + "\n".join(deteccoes)
+
+                return dados
+
+    return "Não entendi sua pergunta. Tente usar palavras como 'peça', 'sensor', 'ciclo', 'estação', 'estado' ou 'detecção'."
 
 @app.route('/')
 def home():
     return send_file('chatbot.html')
 
+# Rota para processar a mensagem enviada pelo usuário
 @app.route('/send_message', methods=['POST'])
 def send_message():
     data = request.get_json()
-    if not data or 'message' not in data:
-        return jsonify({'status': 'error', 'response': '[Mensagem inválida recebida]'}), 400
+    mensagem = data.get('message', '')
 
-    user_message = data['message']
-    bot_response = responder_mensagem(user_message)
-
-    chat_history.append({'user': user_message, 'bot': bot_response})
-    return jsonify({'status': 'success', 'response': bot_response})
+    try:
+        resposta = consultar_api(mensagem)
+        return jsonify({'resposta': resposta})
+    except Exception as e:
+        return jsonify({'resposta': f"Erro ao consultar API: {e}"}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, host='localhost', port=8000)
+    app.run(host="localhost", port=8000, debug=True)

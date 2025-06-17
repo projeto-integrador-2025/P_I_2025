@@ -6,6 +6,7 @@ async function enviarMensagem() {
 
   const chatBox = document.getElementById('caixaChat');
 
+  // Exibe a mensagem do usuário
   const userDiv = document.createElement('div');
   userDiv.className = 'mensagem-chat';
   userDiv.innerHTML = `<span class='usuario-chat'>Você:</span> ${mensagem}`;
@@ -19,11 +20,19 @@ async function enviarMensagem() {
     });
 
     const data = await response.json();
-    const botMsg = data.response || '[Resposta inválida do servidor]';
+    let botMsg;
+
+    // Verifica se é um objeto (lista ou dicionário)
+    if (typeof data.resposta === 'object') {
+      botMsg = `<pre>${JSON.stringify(data.resposta, null, 2)}</pre>`;
+    } else {
+      // Substitui \n por <br> para manter quebra de linha
+      botMsg = data.resposta.replace(/\n/g, "<br>") || '[Resposta inválida do servidor]';
+    }
 
     const respostaDiv = document.createElement('div');
     respostaDiv.className = 'mensagem-chat';
-    respostaDiv.innerHTML = `<span class='usuario-chat'>Bot:</span> ${botMsg}`;
+    respostaDiv.innerHTML = `<span class='usuario-chat'>Bot:</span><br>${botMsg}`;
     chatBox.appendChild(respostaDiv);
 
   } catch (error) {
@@ -49,11 +58,8 @@ document.getElementById('entradaUsuario').addEventListener('keydown', function (
 // Exibe mensagem de boas-vindas ao carregar a página
 window.addEventListener('DOMContentLoaded', () => {
   const chatBox = document.getElementById('caixaChat');
-
-const welcomeDiv = document.createElement('div');
-welcomeDiv.className = 'mensagem-chat';
-welcomeDiv.innerHTML = `<span class='usuario-chat'>Bot:</span> Olá, seja Bem-vindo ao Chat, estou aqui para ajudar.`;
-
-
+  const welcomeDiv = document.createElement('div');
+  welcomeDiv.className = 'mensagem-chat';
+  welcomeDiv.innerHTML = `<span class='usuario-chat'>Bot:</span> Olá, seja bem-vindo ao Chat. Estou aqui para ajudar.`;
   chatBox.appendChild(welcomeDiv);
 });
