@@ -27,13 +27,14 @@ export default function ChatBotScreen() {
     if (text.includes('status')) return 'O CLP está operando normalmente.';
     if (text.includes('recicláveis')) return 'Hoje, foram detectadas 83 peças recicláveis.';
     if (text.includes('histórico')) return 'O histórico de produção está disponível no dashboard.';
-    return 'Desculpe, não entendi. Tente perguntar sobre o status, peças recicláveis ou histórico.';
+     if (text.includes('erro')) return 'Erro na esteira 1';
+    return 'Desculpe, não entendi. Tente perguntar sobre o status, erro, peças recicláveis ou histórico.';
   };
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.container}>
-      <Link href="../../entry" style={styles.icon}>
-         <EvilIcons name="arrow-left" size={35} color="#666" />
+      <Link href="/(tabs)/entry" style={styles.icon}>
+         <EvilIcons name="arrow-left" size={45} color="#666" />
       </Link>
       <ScrollView style={styles.messages}>
         {messages.map((msg, index) => (

@@ -1,46 +1,77 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { PieChart, BarChart, LineChart } from 'react-native-chart-kit';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import { Link } from 'expo-router';
+import api from '../../services/api';
 
 const screenWidth = Dimensions.get('window').width;
+const chartWidth = screenWidth - 40; // Margem segura
+
+interface Ciclo {
+  idCiclo: number;
+  idPeca: number;
+  idEstacao: number;
+  timestampCiclo: string;
+  turno: string;
+}
 
 export default function DashboardScreen() {
+  const [ciclos, setCiclos] = useState<Ciclo[]>([]);
+  const [erro, setErro] = useState(false);
+
+  useEffect(() => {
+    const carregarDados = async () => {
+      try {
+        const resposta = await api.get<Ciclo[]>('/Ciclo');
+        setCiclos(resposta.data);
+      } catch (err) {
+        console.error('Erro ao buscar dados da API:', err);
+        setErro(true);
+      }
+    };
+
+    carregarDados();
+  }, []);
+
   const pieData = [
     {
-      name: 'Plásticos',
-      population: 61,
+      name: 'Plástico',
+      population: ciclos.filter(c => c.idPeca === 1).length,
       color: '#B4DEBE',
       legendFontColor: '#666666',
       legendFontSize: 12,
     },
     {
-      name: 'Metais',
-      population: 39,
+      name: 'Metal',
+      population: ciclos.filter(c => c.idPeca === 2).length,
       color: '#77CCA4',
       legendFontColor: '#666666',
       legendFontSize: 12,
     },
   ];
 
-  const barData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  const barErroData = {
+    labels: ciclos.map(c => `C${c.idCiclo}`),
     datasets: [
       {
-        data: [50, 60, 70, 55, 66, 75, 64, 69, 54, 60, 63, 59],
+        data: ciclos.map(c => Number.isFinite(c.idEstacao) ? c.idEstacao : 0),
       },
     ],
   };
 
   const lineData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+    labels: ciclos.map(c => `C${c.idCiclo}`),
     datasets: [
       {
-        data: [5, 6, 6.5, 6, 6.8, 6.3, 7],
+        data: ciclos.map(c => {
+          const date = new Date(c.timestampCiclo);
+          const segundos = isNaN(date.getTime()) ? 0 : date.getSeconds();
+          return Number.isFinite(segundos) ? segundos : 0;
+        }),
         strokeWidth: 2,
         color: () => '#77CCA4',
-      },    
+      },
     ],
   };
 
@@ -60,56 +91,70 @@ export default function DashboardScreen() {
     },
   };
 
-  
-
   return (
-    <ScrollView style={styles.container}>
-
-      <Link href="../../entry" style={styles.icon}>
-            <EvilIcons name="arrow-left" size={35} color="#666" />
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 20 }}>
+      <Link href="/(tabs)/entry" style={styles.icon}>
+        <EvilIcons name="arrow-left" size={50} color="#666" />
       </Link>
 
       <Text style={styles.header}>Dashboard</Text>
 
-      <View style={styles.card}>
-        <Text style={styles.title}>Taxa de erro na separação</Text>
-        <PieChart
-          data={pieData}
-          width={screenWidth - 40}
-          height={160}
-          chartConfig={chartConfig}
-          accessor="population"
-          backgroundColor="transparent"
-          paddingLeft="10"
-          center={[0, 0]}
-          absolute
-        />
-      </View>
+      {erro ? (
+        <Text style={{ color: 'red', textAlign: 'center' }}>Erro ao carregar dados da API</Text>
+      ) : (
+        <>
+          {/* PIE CHART */}
+          <View style={styles.card}>
+            <Text style={styles.title}>Taxa de erro na separação</Text>
+            <PieChart
+              data={pieData}
+              width={chartWidth}
+              height={160}
+              chartConfig={chartConfig}
+              accessor="population"
+              backgroundColor="transparent"
+              paddingLeft="15"
+              center={[0, 0]}
+              absolute
+            />
+          </View>
 
-      <View style={styles.card}>
-        <Text style={styles.title}>Materiais Processados</Text>
-        <BarChart
-          data={barData}
-          width={screenWidth - 40}
-          height={220}
-          chartConfig={chartConfig}
-          fromZero
-          showValuesOnTopOfBars
-          style={styles.chart}
-        />
-      </View>
+          {/* BAR CHART - ERRO POR CICLO */}
+          <View style={styles.card}>
+            <Text style={styles.title}>Taxa de Erro por Ciclo</Text>
+            <View style={{ overflow: 'hidden' }}>
+              <BarChart
+                data={barErroData}
+                width={chartWidth}
+                height={220}
+                chartConfig={chartConfig}
+                fromZero
+                showValuesOnTopOfBars
+                yAxisSuffix=""
+                yAxisLabel=""
+                style={styles.chart}
+              />
+            </View>
+          </View>
 
-      <View style={styles.card}>
-        <Text style={styles.title}>Desempenho Geral da Produção</Text>
-        <LineChart
-          data={lineData}
-          width={screenWidth - 40}
-          height={220}
-          chartConfig={chartConfig}
-          bezier
-          style={styles.chart}
-        />
-      </View>
+          {/* LINE CHART */}
+          <View style={styles.card}>
+            <Text style={styles.title}>Desempenho Geral da Produção</Text>
+            <View style={{ overflow: 'hidden' }}>
+              <LineChart
+                data={lineData}
+                width={chartWidth}
+                height={220}
+                chartConfig={chartConfig}
+                bezier
+                yAxisSuffix=""
+                yAxisLabel=""
+                style={styles.chart}
+              />
+            </View>
+          </View>
+        </>
+      )}
     </ScrollView>
   );
 }
@@ -129,7 +174,8 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#CAE8CD',
-    margin: 10,
+    marginHorizontal: 10,
+    marginBottom: 15,
     padding: 12,
     borderRadius: 12,
     elevation: 3,
@@ -147,10 +193,10 @@ const styles = StyleSheet.create({
   chart: {
     borderRadius: 12,
   },
-   icon: {
-     position: 'absolute',
-     top: 20,
-     left: 20,
-     zIndex: 10,
+  icon: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    zIndex: 10,
   },
 });

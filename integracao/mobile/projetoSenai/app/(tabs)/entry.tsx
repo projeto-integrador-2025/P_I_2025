@@ -6,36 +6,34 @@ export default function DashboardScreen() {
     <View style={styles.container}>    
 
       <View>
-        <Image source={require('../../projetoSenai/assets/images/logo.png')} style={styles.logo} />
+        <Image source={require('../../assets/images/logo.png')} style={styles.logo} />
       </View>
 
       <View style={styles.options}>
         <Text style={styles.text}>Projeto Integrador</Text>
-        <Link href="./monitoramento" asChild>
+        <Link href="/(tabs)/monitoramento" asChild>
           <TouchableOpacity style={styles.box1}>
             <Text style={styles.linkText}>Monitoramento</Text>
           </TouchableOpacity>
         </Link>
-        <Link href="./chatbot" asChild>
+        <Link href="/(tabs)/chatbot" asChild>
           <TouchableOpacity style={styles.box1}>
             <Text style={styles.linkText}>Chatbot</Text>
           </TouchableOpacity>
         </Link>
-        <Link href="./dashboard" asChild>
+        <Link href="/(tabs)/dashboard" asChild>
           <TouchableOpacity style={styles.box1}>
             <Text style={styles.linkText}>Dashboard</Text>
           </TouchableOpacity>
         </Link>
-        <Link href="./sobre" asChild>
+        <Link href="/(tabs)/sobre" asChild>
           <TouchableOpacity style={styles.box1}>
             <Text style={styles.linkText}>Sobre Nós</Text>
           </TouchableOpacity>
         </Link>
       </View>
 
-      <View style={styles.footer}>
-        
-      </View>
+      
 
 
     </View>
@@ -86,10 +84,7 @@ const styles = StyleSheet.create({
     height: 190,
     marginLeft: 'auto',
     marginRight: 'auto',
+    marginTop: 40,
 },
-footer:{
-  backgroundColor:'#666',
-  height: 35,
-  marginTop:170,
-}
+
 });

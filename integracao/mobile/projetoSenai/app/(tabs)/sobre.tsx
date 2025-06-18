@@ -6,6 +6,15 @@ import { Link } from 'expo-router';
 const { width } = Dimensions.get('window');
 const cardWidth = (width - 72) / 2;
 
+// Importação das imagens locais
+const rafaelImage = require('../../assets/images/rafael.jpeg');
+const victorImage = require('../../assets/images/victor.jpeg');
+const danielImage = require('../../assets/images/daniel.jpeg');
+const valentinaImage = require('../../assets/images/valentina.jpeg');
+const joseImage = require('../../assets/images/jose.jpeg');
+const juliaImage = require('../../assets/images/julia.jpeg');
+const samuelImage = require('../../assets/images/samuel.jpeg');
+
 const teamMembers = [
   {
     id: 1,
@@ -13,8 +22,8 @@ const teamMembers = [
     role: 'Automação',
     location: 'Sorocaba, SP',
     email: 'teste@test.com',
-    image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400',
-    description: 'Responsavel pela automação e CLP',
+    image: rafaelImage,
+    description: 'Responsável pela automação e CLP.',
   },
   {
     id: 2,
@@ -22,8 +31,8 @@ const teamMembers = [
     role: 'Nuvem',
     location: 'Sorocaba, SP',
     email: 'teste@test.com',
-    image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400',
-    description: 'Desenvolvimento e integração do projeto na nuvem pela aws.',
+    image: juliaImage,
+    description: 'Desenvolvimento e integração do projeto na nuvem pela AWS.',
   },
   {
     id: 3,
@@ -31,16 +40,16 @@ const teamMembers = [
     role: 'Backend',
     location: 'Sorocaba, SP',
     email: 'teste@test.com',
-    image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
-    description: 'Responsavel pela criação e desenvolvimento da API.',
+    image: valentinaImage,
+    description: 'Responsável pela criação e desenvolvimento da API.',
   },
   {
     id: 4,
-    name: 'Victor ',
+    name: 'Victor',
     role: 'Banco de Dados',
     location: 'Sorocaba, SP',
     email: 'teste@test.com',
-    image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: victorImage,
     description: 'Criação e manutenção do banco de dados.',
   },
   {
@@ -49,17 +58,17 @@ const teamMembers = [
     role: 'Frontend',
     location: 'Sorocaba, SP',
     email: 'teste@test.com',
-    image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: joseImage,
     description: 'Desenvolvimento do frontend da aplicação.',
   },
   {
     id: 6,
     name: 'Samuel Wellington',
     role: 'Mobile',
-    location:'Sorocaba, SP',
+    location: 'Sorocaba, SP',
     email: 'teste@test.com',
-    image: 'https://images.pexels.com/photos/1438081/pexels-photo-1438081.jpeg?auto=compress&cs=tinysrgb&w=400',
-    description: 'Desenvolvimento e criação do aplicativo mobile',
+    image: samuelImage,
+    description: 'Desenvolvimento e criação do aplicativo mobile.',
   },
   {
     id: 7,
@@ -67,8 +76,8 @@ const teamMembers = [
     role: 'Chatbot',
     location: 'Sorocaba, SP',
     email: 'teste@test.com',
-    image: 'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=400',
-    description: 'Contrução do chatbot da aplicação.',
+    image: danielImage,
+    description: 'Construção do chatbot da aplicação.',
   },
   {
     id: 8,
@@ -84,29 +93,31 @@ const teamMembers = [
 export default function TeamScreen() {
   return (
     <SafeAreaView style={styles.container}>
-        <Link href="/entry" asChild>
+      <Link href="/(tabs)/entry" asChild>
         <TouchableOpacity style={styles.backButton}>
-          <EvilIcons name="arrow-left" size={32} color="#444" />
+          <EvilIcons name="arrow-left" size={40} color="#444" />
         </TouchableOpacity>
       </Link>
+
       <View style={styles.backgroundGradient}>
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
           {/* Header */}
           <View style={styles.header}>
             <Text style={styles.title}>Nossa Equipe</Text>
-            <Text style={styles.subtitle}>
-            </Text>
           </View>
 
           {/* Team Grid */}
           <View style={styles.teamGrid}>
             {teamMembers.map((member) => (
               <View key={member.id} style={styles.memberCard}>
-                <Image source={{ uri: member.image }} style={styles.memberImage} />
+                <Image
+                  source={typeof member.image === 'number' ? member.image : { uri: member.image }}
+                  style={styles.memberImage}
+                />
                 <View style={styles.memberInfo}>
                   <Text style={styles.memberName}>{member.name}</Text>
                   <Text style={styles.memberRole}>{member.role}</Text>
-                  
+
                   <View style={styles.memberDetails}>
                     <View style={styles.detailRow}>
                       <View style={styles.locationIcon} />
@@ -117,7 +128,7 @@ export default function TeamScreen() {
                       <Text style={styles.detailText}>{member.email}</Text>
                     </View>
                   </View>
-                  
+
                   <Text style={styles.memberDescription}>{member.description}</Text>
                 </View>
               </View>
@@ -160,7 +171,7 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-   backButton: {
+  backButton: {
     position: 'absolute',
     top: 20,
     left: 20,
@@ -181,13 +192,6 @@ const styles = StyleSheet.create({
     color: '#065F46',
     marginBottom: 12,
     textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 16,
-    fontFamily: 'bold',
-    color: '#047857',
-    textAlign: 'center',
-    lineHeight: 22,
   },
   teamGrid: {
     paddingHorizontal: 24,
@@ -223,7 +227,7 @@ const styles = StyleSheet.create({
   },
   memberRole: {
     fontSize: 14,
-    fontFamily: 'bold',
+    fontWeight: 'bold',
     color: '#059669',
     marginBottom: 12,
   },
@@ -251,13 +255,13 @@ const styles = StyleSheet.create({
   },
   detailText: {
     fontSize: 12,
-    fontFamily: 'bold',
+    fontWeight: 'bold',
     color: '#6B7280',
     flex: 1,
   },
   memberDescription: {
     fontSize: 12,
-    fontFamily: 'bold',
+    fontWeight: 'bold',
     color: '#374151',
     lineHeight: 16,
   },
@@ -297,7 +301,7 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 14,
-    fontFamily: 'bold',
+    fontWeight: 'bold',
     color: '#047857',
   },
 });

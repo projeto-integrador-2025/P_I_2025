@@ -1,83 +1,28 @@
-import { Link } from 'expo-router';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, Pressable,  } from 'react-native';
-import { router } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 
+const logo = require('../assets/images/logo.png');
 
-
-export default function LoginScreen() {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleLogin = () => {
-    if (!email || !password) {
-      setError('Please fill in all fields');
-      return;
-    }
-    
-    
-    router.replace('../../projetoSenai/app/(tabs)');
-  };
-
+export default function IndexScreen() {
+  const router = useRouter();
 
   return (
+    <View style={styles.container}>
+      <Image source={logo} style={styles.logo} />
 
-    <View style={styles.container}>    
-      <View style={styles.header}>
-        <Image source={require('../../projetoSenai/assets/images/logo.png')} style={styles.logo} />
-      </View>
+      <Text style={styles.title}>Bem-vindo</Text>
+      <Text style={styles.subtitle}>
+        Solução inteligente para o monitoramento e classificação de resíduos.
+      </Text>
 
-      <View style={styles.loginContainer}>
-        <Text style={styles.title}>Login</Text>
-
-        <TextInput style={styles.input} 
-        placeholder="Informe o E-mail"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoComplete="email"
-        placeholderTextColor="#666"
-        />
-
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={styles.passwordInput}
-            placeholder="Informe a Senha"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={!showPassword}
-            autoCapitalize="none"
-            placeholderTextColor="#666"
-          />
-           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-             {showPassword ? (
-               <Feather name="eye" size={22} color="#666" />
-             ) : (
-               <Feather name="eye-off" size={22} color="#666" />
-             )}
-           </TouchableOpacity>
-
-        </View>
-          
-        
-
-             <Link href="./entry">
-                <TouchableOpacity style={styles.button}>
-                  <Text style={styles.buttonText}>Login{" "}</Text>
-                </TouchableOpacity>
-             </Link>
-
-        <Text style={styles.textFooter}>
-            Não tem cadastro ainda?{" "}
-            <Link href="./signUp">
-              <Text style={styles.textLink}>Cadastrar</Text>
-            </Link>
-         </Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.buttonPrimary}
+          onPress={() => router.push('/auth/login')}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.buttonText}>Entrar</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -86,112 +31,48 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F0F0D8', 
+    backgroundColor: '#F0F0D8',  // bege esverdeado claro
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
-   header:{
-      
-   },
   logo: {
-    flex: 1,
     width: 150,
     height: 150,
     resizeMode: 'contain',
-    position: 'absolute',
-    top: 50, 
-    marginTop: -20,
-    marginLeft:117,
-  },
-  loginContainer: {
-    backgroundColor:'#B4DEBE',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 200, 
-    borderTopLeftRadius:80,
-    
+    marginBottom: 30,
   },
   title: {
-    fontSize: 35,
-    fontWeight: 'bold',
-    color: '#666',
-    marginBottom: 25,
-    marginTop: -40,
-    padding: 30,
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#4A7C59', // verde musgo médio escuro
+    marginBottom: 10,
+    textAlign: 'center',
   },
-  eyeIcon: {
-    position: 'absolute',
-    right: 16,
-    top: 16,
-  },
-  input: {
-    width: '80%',
-    height: 55, 
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    marginBottom: 40, 
-    paddingHorizontal: 15,
+  subtitle: {
     fontSize: 16,
-    color: '#333',
-    elevation: 2,
-
-  },
-  passwordContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    paddingHorizontal: 15,
-    width: '80%',
-    height: 55,
+    color: '#666666', // cinza escuro para contraste suave
+    textAlign: 'center',
     marginBottom: 40,
-    elevation: 2,
+    lineHeight: 22,
   },
-  
-  passwordInput: {
-    flex: 1,
-    fontSize: 16,
-    color: '#333',
+  buttonContainer: {
+    width: '100%',
   },
-  
-  button: {
-    width: 300,
-    height: 50,// Botão mais alto também
-    backgroundColor: '#666',
-    justifyContent: 'center',
+  buttonPrimary: {
+    backgroundColor: '#77CCA4', // verde pastel vibrante
+    paddingVertical: 15,
+    borderRadius: 10,
     alignItems: 'center',
-    borderRadius: 12,
-    marginTop: 40,
-    shadowColor: "#000",
-    shadowOffset: {
-    width: 0,
-    height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    elevation: 12,
+    shadowColor: '#4A7C59',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5, // para sombra no Android
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: '#F0F0D8', // cor clara para o texto do botão
     fontSize: 18,
+    fontWeight: '600',
   },
-  registerText: {
-    marginTop: 20,
-    color: '#666',
-    fontSize: 15,
-  },
-  registerLink: {
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  textFooter: {
-    color: '#fff',
-    fontSize: 15,
-    marginTop: 18,
-  },
-  textLink: {
-    fontWeight: 'bold',
-    color: '#333',
-  }
-
 });
