@@ -1,21 +1,15 @@
-
 $(document).ready(function () {
-  const API_URL ='http://localhost:5286/api/Login/verificar';
-
-  
   $('#loginForm').on('submit', function (e) {
-    e.preventDefault();        
+    e.preventDefault();
 
-    
+    // Limpa mensagens de erro
     $('.error-message').text('');
 
-    
-    const email    = $('#email').val().trim();
+    const email = $('#email').val().trim();
     const password = $('#password').val().trim();
 
     let isValid = true;
 
-    
     if (email === '') {
       $('#emailError').text('Informe seu e-mail.');
       isValid = false;
@@ -26,28 +20,31 @@ $(document).ready(function () {
       isValid = false;
     }
 
-    if (!isValid) return;  
+    if (!isValid) return;
+
+    // Requisição GET para buscar todos os usuários
     $.ajax({
-      url:'http://localhost:5286/api/Login/verificar',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        email: email,
-        senha: password       
-      }),
-      success: function (response) {
-        
-        localStorage.setItem('usuarioLogado', JSON.stringify(response));
-        alert('O login bem sucedido');
-        window.location.href ='http://127.0.0.1:5501/P_I_2025/Dasbhoard/Dashboard.html';
- 
+      url: 'http://54.85.232.244:8080/api/login',
+      method: 'GET',
+      success: function (usuarios) {
+        // Verifica se existe um usuário com o e-mail e senha fornecidos
+        const usuarioEncontrado = usuarios.find(function (usuario) {
+          return usuario.email === email && usuario.senha === password;
+        });
+
+        if (usuarioEncontrado) {
+          // Armazena o usuário no localStorage
+          localStorage.setItem('usuarioLogado', JSON.stringify(usuarioEncontrado));
+          alert('Login bem-sucedido!');
+          // Redireciona para a dashboard
+          window.location.href = 'http://localhost:3000/P_I_2025/Dasbhoard/Dashboard.html';
+        } else {
+          $('#emailError').text('E-mail ou senha incorretos.');
+          alert('Usuário não encontrado');
+        }
       },
-      error: function (xhr) {
-        
-        const mensagem =
-          xhr.responseText || 'E-mail ou senha inválidos. Tente novamente.';
-        $('#emailError').text(mensagem);
-        alert('Erro no login')
+      error: function () {
+        alert('Erro ao buscar usuários no servidor.');
       }
     });
   });

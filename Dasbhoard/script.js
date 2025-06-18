@@ -3,7 +3,7 @@ const labels = Array.from({ length: 10 }, (_, i) => `T-${i + 1}`);
     const chartVolume = new Chart(document.getElementById("chartVolume"), {
   type: "line",
   data: {
-    labels: [], // agora será preenchido com datas
+    labels: [], 
     datasets: [{
       label: "Volume (kg)",
       data: [],
@@ -179,13 +179,13 @@ const labels = Array.from({ length: 10 }, (_, i) => `T-${i + 1}`);
 
   function atualizarDados() {
   $.ajax({
-    url: 'http://localhost:5286/api/Peca',
+    url: 'http://54.85.232.244:8080/api/Peca',
     method: 'GET',
     dataType: 'json',
     success: function (data) {
       console.log('Dados da API:', data);
 
-      // ======= 1. Agrupa por minuto =======
+      
       const agrupadoPorMinuto = {};
       data.forEach(peca => {
         const dataCriacao = new Date(peca.dataCriacao);
@@ -196,7 +196,7 @@ const labels = Array.from({ length: 10 }, (_, i) => `T-${i + 1}`);
         const hora = String(dataCriacao.getHours()).padStart(2, '0');
         const minuto = String(dataCriacao.getMinutes()).padStart(2, '0');
 
-        const dataFormatada = `|${dia}/${mes} - ${hora}:${minuto}|`; // yyyy-mm-dd HH:mm
+        const dataFormatada = `|${dia}/${mes} - ${hora}:${minuto}|`; 
 
         if (!agrupadoPorMinuto[dataFormatada]) {
           agrupadoPorMinuto[dataFormatada] = 0;
@@ -208,16 +208,14 @@ const labels = Array.from({ length: 10 }, (_, i) => `T-${i + 1}`);
       const minutosOrdenados = Object.keys(agrupadoPorMinuto).sort();
       const volumes = minutosOrdenados.map(minuto => agrupadoPorMinuto[minuto] * 0.2); // 0.2 kg por peça
 
-      // Atualiza gráfico de volume com agrupamento por minuto
+      
       chartVolume.data.labels = minutosOrdenados;
       chartVolume.data.datasets[0].data = volumes;
       chartVolume.update();
 
-      // Atualiza volume total exibido
       const volumeTotal = volumes.reduce((a, b) => a + b, 0);
       document.getElementById("volume").textContent = `${volumeTotal.toFixed(2)} kg`;
 
-      // ======= 2. Contagem por tipo de material =======
       const contagem = { plastico: 0, metalica: 0, refugo: 0 };
       data.forEach(peca => {
         const tipo = peca.tipoMaterial.toLowerCase();
@@ -226,7 +224,6 @@ const labels = Array.from({ length: 10 }, (_, i) => `T-${i + 1}`);
         else if (tipo === 'refugo') contagem.refugo++;
       });
 
-      // Atualiza gráfico de tipos de material (pizza)
 chartTipos.data.datasets[0].data = [
   contagem.plastico,
   contagem.metalica,
@@ -241,7 +238,7 @@ chartTipos.update();
 
       document.getElementById("erro").textContent = `${erro.toFixed(2)}%`;
 
-      // Atualiza gráfico de erro (barras)
+      
       if (chartErro.data.datasets[0].data.length >= 10) {
         chartErro.data.datasets[0].data.shift();
       }
@@ -249,7 +246,6 @@ chartTipos.update();
       chartErro.update();
 
 
-    // ======= 3. Eficiência por turno =======
 const eficienciaPorTurno = { manha: { total: 0, erros: 0 },
                              tarde: { total: 0, erros: 0 },
                              noite: { total: 0, erros: 0 },

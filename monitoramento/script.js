@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const API_PECA = 'http://localhost:5286/api/Peca';
-  const API_CICLO = 'http://localhost:5286/api/ciclo';
-  const API_ESTADO = 'http://localhost:5286/api/estacaoEstado';
+  const API_PECA = 'http://54.85.232.244:8080/api/Peca';
+  const API_CICLO = 'http://54.85.232.244:8080/api/ciclo';
+  const API_ESTADO = 'http://54.85.232.244:8080/api/estacaoEstado';
 
   fetch(API_CICLO)
     .then(response => response.json())

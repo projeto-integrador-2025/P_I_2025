@@ -46,7 +46,7 @@ window.location.href ="http://127.0.0.1:5501/Pagina%20Inicial/index.html";
 
       if (isValid) {
         $.ajax({
-          url: 'http://localhost:5286/api/Login', 
+          url: 'http://54.85.232.244:8080/api/Login', 
           type: 'POST',
           contentType: 'application/json',
           data: JSON.stringify({
