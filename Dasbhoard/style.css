@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #eeeea2c4;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      font-family: "Roboto", sans-serif;
+    }
+
+    img{
+
+      width:80px;
+    }
+    .sidebar {
+      
+      margin-top:10px;
+      margin-left:10px;
+      width:220px;
+      height:90vh;
+      background-color: #77cca4;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      padding: 15px;
+      border-radius:10px;
+     
+    }
+
+    .sidebar h2 {
+      font-size: 1.2rem;
+    
+    }
+
+    .sidebar a {
+      color:black;
+      text-decoration: none;
+      padding: 10px 0;
+      display: block;
+      transition: background 0.3s;
+      margin-top:20px;
+    }
+
+    .sidebar a:hover {
+      background-color:#f0f0d8be;
+      border-radius: 5px;
+      padding-left: 10px;
+    }
+
+    .fundo {
+      flex-grow: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .dashboard-title {
+      margin-bottom: 30px;
+    }
+
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s;
+      height: 100%;
+      color: #77cca4;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card canvas {
+      margin-top: 10px;
+      width: 100% !important;
+      height: 320px !important;
+    }
+
+    @media screen and (max-width: 768px) {
+  body {
+    flex-direction: column; 
+    height: auto; 
+  }
+
+  .sidebar {
+    width: 100%; 
+    height: auto; 
+    margin: 0; 
+    border-radius:10px; 
+    padding: 15px; 
+  }
+
+  .sidebar h2 {
+    font-size: 1rem; 
+    margin-bottom: 20px;
+  }
+
+  .sidebar a {
+    padding: 8px 0; 
+    font-size: 0.9rem; 
+  }
+
+  .fundo {
+    padding: 15px; 
+  }
+
+  .dashboard-title {
+    font-size: 1.5rem; 
+    margin-bottom: 20px;
+  }
+
+  .card {
+    margin-bottom: 20px; 
+  }
+
+  .card canvas {
+    height: 200px !important; 
+  }
+
+  
+  .row {
+    flex-direction: column;
+  }
+
+  .col-lg-4,
+  .col-md-6,
+  .col-md-12 {
+    width: 100%; 
+  }
+}
+
+
+@media screen and (max-width: 576px) {
+  .sidebar{
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    margin: 0;
+    overflow-x: auto; 
+
+  }
+
+  .sidebar h2 {
+    display: none;
+  }
+
+  .sidebar a {
+    font-size: 0.8rem;
+    padding: 6px 0;
+  }
+
+  .fundo{
+    padding: 10px; 
+  }
+
+  .dashboard-title {
+    font-size: 1.2rem; 
+  }
+
+  .card canvas {
+    height: 150px !important; 
+  }
+
+  .card h5 {
+    font-size: 1rem; 
+  }
+
+  .card p {
+    font-size: 0.9rem; 
+  }
+}
+

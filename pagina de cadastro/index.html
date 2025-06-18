@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  
+</head>
+<body>
+    <div class="container">
+        <div class="content first-content">
+            <div class="first-column">
+                <img src="../img/logo (3) (2).png" width="120px">
+                <h2 class="title title-primary">Bem vindo!</h2>
+                <p class="description description-primary">Você já tem cadastro?</p>
+                <p class="description description-primary">Acesse o login</p>
+                <button class="btn btn-primary"><a style="text-decoration: none;color: rgba(28, 28, 28, 0.529);" href="/P_I_2025/PaginaInicial/index.html">Login</a></button>
+            </div>    
+            <div class="second-column">
+                <h2 class="title title-second">Faça seu Cadastro</h2>
+                
+                <form id="registerForm" class="form">
+                    <label class="label-input" for="nome">
+                        <i class="far fa-user icon-modify"></i>
+                        <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+                    </label>
+                    <div id="nomeError" class="error-message"></div>
+
+                        <label class="label-input" for="email">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    </label>
+                    <div id="emailError" class="error-message"></div>
+
+                    <label class="label-input" for="senha">
+                        <i class="fas fa-lock icon-modify"></i>
+                        <input type="password" id="senha" name="senha" placeholder="Senha" required minlength="6">
+                    </label>
+                    <div id="senhaError" class="error-message"></div>
+
+                    <label class="label-input" for="confirmarSenha">
+                        <i class="fas fa-lock icon-modify"></i>
+                        <input type="password" id="confirmarSenha" placeholder="Confirmar senha" required>
+                    </label>
+                    <div id="confirmarSenhaError" class="error-message"></div>
+                    
+                    <button type="submit" class="btn btn-second">Cadastrar</button>
+                    <div id="registerError" class="error-message"></div>
+                    <div id="registerSuccess" class="success-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

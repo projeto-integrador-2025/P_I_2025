@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Página de Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    
+<body>
+    <div class="container">
+        <div class="content first-content">
+            <div class="first-column">
+                <img src="../img/logo (3) (2).png"width="120px">
+                <h2 class="title title-primary">Bem vindo!</h2>
+                <p class="description description-primary">Conecte-se conosco</p>
+                <p class="description description-primary">Faça seu cadastro</p>
+                <button class="btn btn-primary"><a style="text-decoration: none;color:rgba(28, 28, 28, 0.529);"href="/P_I_2025/Pagina de cadastro/index.html">Cadastrar</a></button>
+            </div>    
+            <div class="second-column">
+                <h2 class="title title-second">Acessar sua conta</h2>
+                <div class="social-media"></div>
+               
+                <form id="loginForm" class="form">
+                    <label class="label-input" for="email">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    </label>
+                    <div id="emailError" class="error-message"></div>
+                    
+                    <label class="label-input" for="password">
+                        <i class="fas fa-lock icon-modify"></i>
+                        <input type="password" id="password" name="password" placeholder="Senha" required>
+                    </label>
+                    <div id="passwordError" class="error-message"></div>
+                    
+                    <button type="submit" class="btn btn-second">Entrar</button>
+                    <div id="loginError" class="error-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+    
+</body>
+</html>
